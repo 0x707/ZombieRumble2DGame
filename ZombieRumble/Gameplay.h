@@ -10,10 +10,21 @@ namespace game {
 
 	struct GameTime
 	{
-		void clock_restart() { sClock.restart(); }
+		static Time clock_restart() { return s_sClock.restart(); }
+		float delta_asSeconds() const { return sDeltaTime.asSeconds(); }
 
 		Time sGameTotalTime;
-		Clock sClock;
+		Time sDeltaTime;
+		static Clock s_sClock;
+	};
+
+	struct GameScreen
+	{
+		GameScreen(Vector2f const& res, char const* title, Uint32 style);
+
+		Vector2f sResolution;
+		RenderWindow sWindow;
+		View sView;
 	};
 
 	class Game
@@ -30,11 +41,20 @@ namespace game {
 		void set_paused() { state_ = game_state::PAUSED; }
 		void set_playing() { state_ = game_state::PLAYING; }
 		void set_leveling() { state_ = game_state::LEVELING; }
+
+		IntRect const& get_arena() const { return arena_; }
+		void set_arena(IntRect const& arena) { arena_ = arena; }
+
+		void set_tile_size(int value) { tileSize_ = value; }
+		int get_tile_size() const { return tileSize_; }
+
+		void update(GameTime& time, GameScreen& screen, Player& player);
 	private:
 		game_state state_{ game_state::GAME_OVER };
 		IntRect arena_;
-		Vector2f mouseWorldPosition;
-		Vector2i mouseScreenPosition;
+		int tileSize_;
+		Vector2f mouseWorldPosition_;
+		Vector2i mouseScreenPosition_;
 	};
 
 
