@@ -1,24 +1,63 @@
 #include "pch.h"
-#include "Player.h"
-using namespace sf;
+#include "Gameplay.h"
+using namespace game;
 
 int main()
 {
-	VideoMode vm{ 300,400 };
-	Window window{ vm, "Pupka", Style::Default };
+	Vector2f resolution{
+		static_cast<float>(VideoMode::getDesktopMode().width),
+		static_cast<float>(VideoMode::getDesktopMode().height) };
 
-	game::Player p;
-	p.spawn({ 10,20,30,40 }, { 100,200 }, 5);
-	//p.getSprite().setPosition(301, 304);
+	RenderWindow window{ VideoMode { static_cast<unsigned>(resolution.x),
+		static_cast<unsigned>(resolution.y) }, "ZombieRumble", Style::Fullscreen };
 
-	while (window.isOpen())
-	{
+	View mainView{ FloatRect{0, 0, resolution.x, resolution.y} };
+
+	Game theGame;
+	Player player;
+	GameTime time;
+
+	while (window.isOpen()) {
+
+		Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == Event::KeyPressed) {
+				if (event.key.code == Keyboard::Return && theGame.playing())
+					theGame.set_paused();
+				else if (event.key.code == Keyboard::Return && theGame.paused()) {
+					theGame.set_playing();
+					time.clock_restart();
+				}
+				else if (event.key.code == Keyboard::Return && theGame.game_over())
+					theGame.set_leveling();
+
+				if (theGame.playing()) {
+
+				}
+			}
+		} // event poll
+
 		if (Keyboard::isKeyPressed(Keyboard::Escape))
-		{
 			window.close();
-		}
 
-		window.display();
+		if (Keyboard::isKeyPressed(Keyboard::A))
+			player.moveLeft();
+		else
+			player.stopLeft();
+		if (Keyboard::isKeyPressed(Keyboard::D))
+			player.moveRight();
+		else
+			player.stopRight();
+		if (Keyboard::isKeyPressed(Keyboard::W))
+			player.moveUp();
+		else
+			player.stopUp();
+		if (Keyboard::isKeyPressed(Keyboard::S))
+			player.moveDown();
+		else
+			player.stopDown();
+
 	}
+
 	return 0;
 }
