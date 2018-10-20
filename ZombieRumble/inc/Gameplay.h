@@ -1,8 +1,7 @@
-#pragma once
+#include "Player.h"
+
 #ifndef GAMEPLAY_CLASS_H_
 #define GAMEPLAY_CLASS_H_
-
-#include "Player.h"
 
 namespace game {	
 
@@ -60,3 +59,4 @@ namespace game {
 } // namespace game
 
 #endif // !GAMEPLAY_CLASS_H_
+

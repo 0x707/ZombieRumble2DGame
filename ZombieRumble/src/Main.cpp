@@ -1,6 +1,6 @@
 #include "Gameplay.h"
 #include "Arena.h"
-#include "TextureHolder.h"
+
 using namespace game;
 using KB = Keyboard;
 
