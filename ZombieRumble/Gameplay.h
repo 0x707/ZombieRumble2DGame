@@ -1,8 +1,11 @@
 #pragma once
+#ifndef GAMEPLAY_CLASS_H_
+#define GAMEPLAY_CLASS_H_
+
 #include "pch.h"
 #include "Player.h"
 
-namespace game {
+namespace game {	
 
 	enum class game_state {
 		PAUSED, LEVELING, GAME_OVER, PLAYING
@@ -21,10 +24,11 @@ namespace game {
 	struct GameScreen
 	{
 		GameScreen(Vector2f const& res, char const* title, Uint32 style);
+		void set_main_view() { sWindow.setView(sViewMain); }
 
 		Vector2f sResolution;
 		RenderWindow sWindow;
-		View sView;
+		View sViewMain;
 	};
 
 	class Game
@@ -45,17 +49,15 @@ namespace game {
 		IntRect const& get_arena() const { return arena_; }
 		void set_arena(IntRect const& arena) { arena_ = arena; }
 
-		void set_tile_size(int value) { tileSize_ = value; }
-		int get_tile_size() const { return tileSize_; }
-
 		void update(GameTime& time, GameScreen& screen, Player& player);
 	private:
 		game_state state_{ game_state::GAME_OVER };
 		IntRect arena_;
-		int tileSize_;
 		Vector2f mouseWorldPosition_;
 		Vector2i mouseScreenPosition_;
 	};
 
 
 } // namespace game
+
+#endif // !GAMEPLAY_CLASS_H_

@@ -8,7 +8,7 @@ namespace game {
 		: sResolution{ res }
 		, sWindow{ VideoMode{static_cast<unsigned>(res.x),
 			static_cast<unsigned>(res.y)}, title, style }
-		, sView{ {0,0,res.x,res.y} }
+		, sViewMain{ {0,0,res.x,res.y} }
 	{
 	}
 
@@ -19,9 +19,9 @@ namespace game {
 
 		mouseScreenPosition_ = Mouse::getPosition();
 		mouseWorldPosition_ = screen.sWindow.mapPixelToCoords(
-			Mouse::getPosition(), screen.sView );
+			Mouse::getPosition(), screen.sViewMain );
 
 		player.update(time.delta_asSeconds(), Mouse::getPosition());
-		screen.sView.setCenter(player.getCenter());
+		screen.sViewMain.setCenter(player.getCenter());
 	}
 } // namespace game

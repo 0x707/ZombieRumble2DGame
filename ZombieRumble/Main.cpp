@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Gameplay.h"
+#include "Arena.h"
 using namespace game;
 using KB = Keyboard;
 
@@ -17,6 +18,8 @@ int main()
 	Game theGame;
 	Player player;
 	GameTime time;
+	Background bg{"graphics/background_sheet.png"};
+	
 
 	while (screen.sWindow.isOpen()) {
 
@@ -49,8 +52,8 @@ int main()
 
 			if (theGame.playing()) {
 				theGame.set_arena({ 0,0,500,500 }); // left, top, width, height
-				theGame.set_tile_size(50);
-				player.spawn(theGame.get_arena(), resolution, theGame.get_tile_size());
+				bg.create(theGame.get_arena());
+				player.spawn(theGame.get_arena(), resolution, game::TILE_SIZE);
 				time.clock_restart();
 			}
 		} // end theGame.leveling()
@@ -58,7 +61,19 @@ int main()
 		if (theGame.playing())
 			theGame.update(time, screen, player);
 
-
+		switch (theGame.get_state()) {
+		case game_state::PLAYING:
+			screen.sWindow.clear();
+			screen.set_main_view();
+			screen.sWindow.draw(bg.get_background_VA(), &bg());
+			screen.sWindow.draw(player.getSprite());
+			break;
+		case game_state::LEVELING:
+		case game_state::PAUSED:
+		case game_state::GAME_OVER:
+			break;
+		};
+		screen.sWindow.display();
 	}
 
 	return 0;
