@@ -42,26 +42,9 @@ namespace game {
 				if (h == 0 || h == arenaHeight - 1 ||
 					w == 0 || w == arenaWidth - 1)
 					set_tile_texture(currentVertex, TILE_TYPES);
-					/*bcg_[currentVertex + 0].texCoords =
-						Vector2f{ 0, TILE_SIZE * TILE_TYPES };
-					bcg_[currentVertex + 1].texCoords =
-						Vector2f{ TILE_SIZE, TILE_SIZE * TILE_TYPES };
-					bcg_[currentVertex + 2].texCoords =
-						Vector2f{ TILE_SIZE, TILE_SIZE * TILE_TYPES + TILE_SIZE };
-					bcg_[currentVertex + 3].texCoords =
-						Vector2f{ 0, TILE_SIZE * TILE_TYPES + TILE_SIZE };*/
 				else {
 					int morg = random_tile(h * w - h);
 					set_tile_texture(currentVertex, morg);
-
-					/*bcg_[currentVertex + 0].texCoords =
-						Vector2f{ 0, verticalOffset };
-					bcg_[currentVertex + 1].texCoords =
-						Vector2f{ TILE_SIZE, verticalOffset };
-					bcg_[currentVertex + 2].texCoords =
-						Vector2f{ TILE_SIZE, TILE_SIZE + verticalOffset };
-					bcg_[currentVertex + 3].texCoords =
-						Vector2f{ 0, TILE_SIZE + verticalOffset };*/
 				}
 
 				currentVertex += VERTS_IN_QUADS;

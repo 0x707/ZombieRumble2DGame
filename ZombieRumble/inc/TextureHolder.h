@@ -12,14 +12,14 @@ namespace game {
         TextureHolder(TextureHolder const&) = delete;
         TextureHolder& operator=(TextureHolder const&) = delete;
 
-        static TextureHolder& getInstance();
+        static TextureHolder& get_instance();
         sf::Texture texture(char const*);
     private:
         TextureHolder() {}
         std::map<char const*, sf::Texture> textures_;
     };
 
-    TextureHolder& TextureHolder::getInstance()
+    TextureHolder& TextureHolder::get_instance()
     {
         static TextureHolder th;
         return th;

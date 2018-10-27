@@ -31,7 +31,6 @@ namespace game {
 		void set_tile_texture(int, int);
 	};
 
-
 } // namespace game
 
 #endif //! ARENA_CLASS_H_
