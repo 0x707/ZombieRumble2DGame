@@ -69,7 +69,7 @@ namespace game {
 		void update(float elapsedTime, Vector2i mousePosition);
 		void upgradeSpeed() { pData_.sSpeed += static_cast<int>(pData_.START_SPEED * 0.2f); }
 		void upgradeHealth() { pData_.sHealth += static_cast<int>(pData_.START_HEALTH * 0.2f); }
-		void increadeHealthLevel(int amount);
+		void increaseHealthLevel(int amount);
 	private:
 		PlayerData pData_;
 		ScreenSpaceData sData_;

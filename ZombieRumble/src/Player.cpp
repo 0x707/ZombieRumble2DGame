@@ -60,7 +60,7 @@ namespace game {
 		pData_.sSprite.setRotation(angle);
 	}
 
-	void Player::increadeHealthLevel(int amount)
+	void Player::increaseHealthLevel(int amount)
 	{
 		if (pData_.sHealth + amount > pData_.START_HEALTH)
 			pData_.sHealth = static_cast<int>(pData_.START_HEALTH);
