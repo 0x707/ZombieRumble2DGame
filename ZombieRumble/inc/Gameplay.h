@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Horde.h"
 
 #ifndef GAMEPLAY_CLASS_H_
 #define GAMEPLAY_CLASS_H_
@@ -47,7 +48,8 @@ namespace game {
 		IntRect const& get_arena() const { return arena_; }
 		void set_arena(IntRect const& arena) { arena_ = arena; }
 
-		void update(GameTime& time, GameScreen& screen, Player& player);
+		void update(GameTime& time, GameScreen& screen, Player& player,
+			ZombieHorde& horde);
 	private:
 		game_state state_{ game_state::GAME_OVER };
 		IntRect arena_;

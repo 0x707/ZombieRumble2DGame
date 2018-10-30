@@ -13,7 +13,7 @@ namespace game {
 
 	ZombieBase::ZombieBase(char const* path, Vector2f const& pos,
 		float speed, int hp)
-		: sprite_{TextureHolder::get_instance().texture(path)}
+		: sprite_{ TextureHolder::get_instance().texture(path) }
 		, position_{ pos }, speed_{ speed * (ri() / 100) }, health_{ hp }
 	{
 		sprite_.setOrigin(25, 25);
@@ -48,6 +48,27 @@ namespace game {
 
 		sprite_.setRotation(static_cast<float>((atan2(yPos - position_.y,
 			xPos - position_.x) * 180) / 3.141));
+	}
+
+	// BLOATER ======================================================================
+
+	Bloater::Bloater(Vector2f const& pos)
+		: ZombieBase{ "graphics/bloater.png", pos, 35, 5 }
+	{
+	}
+
+	// CHASER  ======================================================================
+
+	Chaser::Chaser(Vector2f const& pos)
+		: ZombieBase{ "graphics/chaser.png" , pos, 70, 2 }
+	{
+	}
+
+	// CRAWLER ======================================================================
+
+	Crawler::Crawler(Vector2f const& pos)
+		: ZombieBase{ "graphics/crawler.png", pos, 20, 4 }
+	{
 	}
 
 } // namespace game

@@ -13,24 +13,11 @@ namespace game {
         TextureHolder& operator=(TextureHolder const&) = delete;
 
         static TextureHolder& get_instance();
-        sf::Texture texture(char const*);
+        sf::Texture& texture(char const*);
     private:
         TextureHolder() {}
         std::map<char const*, sf::Texture> textures_;
     };
-
-    TextureHolder& TextureHolder::get_instance()
-    {
-        static TextureHolder th;
-        return th;
-    }
-
-    sf::Texture TextureHolder::texture(char const* path)
-    {
-        if (auto it{textures_.find(path)}; it == textures_.end())
-            textures_[path].loadFromFile(path);
-        return textures_[path];
-    }
 
 } // namespace game
 

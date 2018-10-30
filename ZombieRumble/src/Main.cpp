@@ -1,5 +1,7 @@
 #include "Gameplay.h"
 #include "Arena.h"
+#include "Horde.h"
+#include "TextureHolder.h"
 
 using namespace game;
 using KB = Keyboard;
@@ -7,6 +9,7 @@ using KB = Keyboard;
 void control_motion(Window&, Player&);
 void control_upgrades(Game&, Event&);
 void prepare_level(Game&, Player&, GameTime&);
+void draw_horde(GameScreen&, ZombieHorde const&);
 
 int main()
 {
@@ -18,8 +21,13 @@ int main()
 	Game theGame;
 	Player player;
 	GameTime time;
-	Background bg{"graphics/background_sheet.png"};
+	Background bg;
+	ZombieHorde horde;
 	
+	// some temporary vars
+	int numZombies;
+	int numZombiesAlive;
+
 
 	while (screen.sWindow.isOpen()) {
 
@@ -54,12 +62,19 @@ int main()
 				theGame.set_arena({ 0,0,500,500 }); // left, top, width, height
 				bg.create(theGame.get_arena());
 				player.spawn(theGame.get_arena(), resolution, game::TILE_SIZE);
+
+				numZombies = 10;
+				horde.release_mem();
+				horde.prepare_horde(numZombies, theGame.get_arena());
+				numZombiesAlive = numZombies;
+
 				time.clock_restart();
 			}
 		} // end theGame.leveling()
 
+		// update each frame
 		if (theGame.playing())
-			theGame.update(time, screen, player);
+			theGame.update(time, screen, player, horde);
 
 		switch (theGame.get_state()) {
 		case game_state::PLAYING:
@@ -67,6 +82,7 @@ int main()
 			screen.set_main_view();
 			screen.sWindow.draw(bg.get_background_VA(), &bg());
 			screen.sWindow.draw(player.getSprite());
+			draw_horde(screen, horde);
 			break;
 		case game_state::LEVELING:
 		case game_state::PAUSED:
@@ -76,6 +92,7 @@ int main()
 		screen.sWindow.display();
 	}
 
+	horde.release_mem();
 	return 0;
 }
 
@@ -115,4 +132,10 @@ void control_upgrades(Game& game, Event& event)
 	case KB::Num6: game.set_playing();
 		break;
 	}
+}
+
+void draw_horde(GameScreen& screen, ZombieHorde const& horde)
+{
+	for (unsigned i = 0; i < horde.zombie_counter(); ++i)
+		screen.sWindow.draw(horde[i]->get_sprite());
 }

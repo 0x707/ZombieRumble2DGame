@@ -1,4 +1,3 @@
-#pragma once
 #include <SFML/Graphics.hpp>
 
 #ifndef PLAYER_CLASS_H_
@@ -50,11 +49,11 @@ namespace game {
 		void resetPlayerStats();
 		bool hit(Time timeHit);
 
-		Time getLastHitTime() const { return pData_.sLastHit; }
-		FloatRect getPosition() const { return pData_.sSprite.getGlobalBounds(); }
-		Vector2f getCenter() const { return pData_.sPosition; }
+		Time const& getLastHitTime() const { return pData_.sLastHit; }
+		FloatRect const& getPosition() const { return pData_.sSprite.getGlobalBounds(); }
+		Vector2f const& getCenter() const { return pData_.sPosition; }
 		float getRotation() const { return pData_.sSprite.getRotation(); }
-		Sprite getSprite() const { return pData_.sSprite; }
+		Sprite const& getSprite() const { return pData_.sSprite; }
 		int getHealth() const { return pData_.sHealth; }
 
 		void moveLeft() { controls_.sLeftPressed = true; }

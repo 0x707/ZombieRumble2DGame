@@ -2,8 +2,8 @@
 #ifndef ARENA_CLASS_H_
 #define ARENA_CLASS_H_
 
-#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
+#include "TextureHolder.h"
 using namespace sf;
 
 namespace game {
@@ -13,12 +13,12 @@ namespace game {
 
 	struct Background
 	{
-		Background(char const* path)
-			: bcg_{ Quads }
+		Background()
+			: texture_{ TextureHolder::get_instance().texture("graphics/background_sheet.png") }
+			, bcg_{ Quads }
 		{
-			texture_.loadFromFile(path);
-
 		}
+
 		Texture&  operator()() { return texture_; }
 		VertexArray const& get_background_VA() const { return bcg_; }
 		int create(IntRect const& arena);

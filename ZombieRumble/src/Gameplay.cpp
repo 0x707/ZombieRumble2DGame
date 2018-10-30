@@ -11,7 +11,8 @@ namespace game {
 	{
 	}
 
-	void Game::update(GameTime& time, GameScreen& screen, Player& player)
+	void Game::update(GameTime& time, GameScreen& screen, Player& player,
+		ZombieHorde& horde)
 	{
 		time.sDeltaTime = GameTime::clock_restart();
 		time.sGameTotalTime += time.sDeltaTime;
@@ -22,5 +23,10 @@ namespace game {
 
 		player.update(time.delta_asSeconds(), Mouse::getPosition());
 		screen.sViewMain.setCenter(player.getCenter());
+
+		for (unsigned i = 0; i < horde.zombie_counter(); ++i)
+			if (horde[i]->is_alive())
+				horde[i]->update(time.delta_asSeconds(),
+					player.getCenter());
 	}
 } // namespace game

@@ -25,6 +25,24 @@ namespace game {
 		bool alive_ = true;
 	};
 
+	class Bloater : public ZombieBase
+	{
+	public:
+		Bloater(Vector2f const&);
+	};
+
+	class Chaser : public ZombieBase
+	{
+	public:
+		Chaser(Vector2f const&);
+	};
+
+	class Crawler : public ZombieBase
+	{
+	public:
+		Crawler(Vector2f const&);
+	};
+
 } // namespace game
 
 #endif // !ZOMBIE_CLASS_H_
