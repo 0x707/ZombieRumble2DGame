@@ -25,8 +25,8 @@ int main()
 	ZombieHorde horde;
 	
 	// some temporary vars
-	int numZombies;
-	int numZombiesAlive;
+	int numZombies = 0;
+	int numZombiesAlive = 0;
 
 
 	while (screen.sWindow.isOpen()) {

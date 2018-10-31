@@ -12,7 +12,7 @@ namespace game {
 		bool hit();
 		void update(float elapsedTime, Vector2f const& playerPos);
 
-		FloatRect const& get_position() const { return sprite_.getGlobalBounds(); }
+		FloatRect get_position() const { return sprite_.getGlobalBounds(); }
 		Sprite const& get_sprite() const { return sprite_; }
 		bool is_alive() const { return alive_; }
 	protected:

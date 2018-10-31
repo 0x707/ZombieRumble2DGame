@@ -15,8 +15,8 @@ namespace game {
 		static Time clock_restart() { return s_sClock.restart(); }
 		float delta_asSeconds() const { return sDeltaTime.asSeconds(); }
 
-		Time sGameTotalTime;
-		Time sDeltaTime;
+		Time sGameTotalTime = sf::Time::Zero;
+		Time sDeltaTime = sf::Time::Zero;
 		static Clock s_sClock;
 	};
 

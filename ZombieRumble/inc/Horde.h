@@ -4,7 +4,7 @@
 #define HORDE_CLASS_H_
 
 namespace game {
-	unsigned constexpr MAX_NO_ZOMBIE = 100;
+	unsigned constexpr MAX_NO_ZOMBIE = 10;
 
 	class ZombieHorde
 	{

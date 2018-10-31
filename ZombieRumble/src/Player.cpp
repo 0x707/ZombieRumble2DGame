@@ -38,7 +38,7 @@ namespace game {
 		return false;
 	}
 
-	void Player::update(float elapsedTime, Vector2i mousePosition)
+	void Player::update(float elapsedTime, Vector2i const &mousePosition)
 	{
 		if (controls_.sLeftPressed)
 			pData_.sPosition.x -= elapsedTime * pData_.sSpeed;
