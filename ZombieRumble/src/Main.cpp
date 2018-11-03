@@ -63,7 +63,7 @@ int main()
 				bg.create(theGame.get_arena());
 				player.spawn(theGame.get_arena(), resolution, game::TILE_SIZE);
 
-				numZombies = 10;
+				numZombies = 10; // TODO reorganize this code
 				horde.release_mem();
 				horde.prepare_horde(numZombies, theGame.get_arena());
 				numZombiesAlive = numZombies;

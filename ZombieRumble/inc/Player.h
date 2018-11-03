@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "TextureHolder.h"
 
 #ifndef PLAYER_CLASS_H_
 #define PLAYER_CLASS_H_
@@ -32,7 +33,8 @@ namespace {
 		float sSpeed = START_SPEED;
 		Vector2f sPosition;
 		Sprite sSprite;
-		Texture sTexture;
+		Texture sTexture{game::TextureHolder::get_instance().texture(
+			"graphics/player.png")};
 		Time sLastHit;
 	};
 } // anonymous namespace
