@@ -5,7 +5,6 @@ namespace game {
 
 	Player::Player()
 	{
-		pData_.sTexture.loadFromFile("graphics/player.png");
 		pData_.sSprite.setTexture(pData_.sTexture);
 		pData_.sSprite.setOrigin(25, 25);
 	}

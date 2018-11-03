@@ -14,7 +14,8 @@ namespace game {
 	ZombieBase::ZombieBase(char const* path, Vector2f const& pos,
 		float speed, int hp)
 		: sprite_{ TextureHolder::get_instance().texture(path) }
-		, position_{ pos }, speed_{ speed * (ri() / 100) }, health_{ hp }
+		, position_{ pos }
+		, speed_{ speed * (static_cast<float>(ri()) / 100) }, health_{ hp }
 	{
 		sprite_.setOrigin(25, 25);
 		sprite_.setPosition(position_);

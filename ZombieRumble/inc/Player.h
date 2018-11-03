@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "TextureHolder.h"
 
 #ifndef PLAYER_CLASS_H_
 #define PLAYER_CLASS_H_
@@ -32,7 +33,8 @@ namespace {
 		float sSpeed = START_SPEED;
 		Vector2f sPosition;
 		Sprite sSprite;
-		Texture sTexture;
+		Texture sTexture{game::TextureHolder::get_instance().texture(
+			"graphics/player.png")};
 		Time sLastHit;
 	};
 } // anonymous namespace
@@ -50,7 +52,7 @@ namespace game {
 		bool hit(Time timeHit);
 
 		Time const& getLastHitTime() const { return pData_.sLastHit; }
-		FloatRect const& getPosition() const { return pData_.sSprite.getGlobalBounds(); }
+		FloatRect getPosition() const { return pData_.sSprite.getGlobalBounds(); }
 		Vector2f const& getCenter() const { return pData_.sPosition; }
 		float getRotation() const { return pData_.sSprite.getRotation(); }
 		Sprite const& getSprite() const { return pData_.sSprite; }
