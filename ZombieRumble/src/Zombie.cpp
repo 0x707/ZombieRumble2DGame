@@ -1,6 +1,6 @@
 #include "Zombie.h"
 #include "TextureHolder.h"
-#include "RandomIntGen.h"
+#include "RandomGen.h"
 
 namespace game {
 

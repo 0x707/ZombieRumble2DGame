@@ -5,6 +5,7 @@
 
 namespace game {
 	using namespace sf;
+namespace arms {
 
 	struct BulletData
 	{
@@ -39,6 +40,7 @@ namespace game {
 		BulletData bData_;
 	};
 
+} // namespace arms
 } // namespace game
 
 #endif // !BULLET_CLASS_H_

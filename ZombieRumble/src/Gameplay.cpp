@@ -12,10 +12,10 @@ namespace game {
 	}
 
 	void Game::update(GameTime& time, GameScreen& screen, Player& player,
-		ZombieHorde& horde)
+		ZombieHorde& horde, arms::Gun& gun)
 	{
-		time.sDeltaTime = GameTime::clock_restart();
-		time.sGameTotalTime += time.sDeltaTime;
+		time.set_delta_time();
+		time.update_total_game_time();
 
 		mouseScreenPosition_ = Mouse::getPosition();
 		mouseWorldPosition_ = screen.sWindow.mapPixelToCoords(
@@ -28,5 +28,9 @@ namespace game {
 			if (horde[i]->is_alive())
 				horde[i]->update(time.delta_asSeconds(),
 					player.getCenter());
+
+		for (int i = 0; i < arms::MAX_BULLETS; ++i)
+			if (gun.get_bullet(i).is_inFlight())
+				gun.get_bullet(i).update(time.delta_asSeconds());
 	}
 } // namespace game
