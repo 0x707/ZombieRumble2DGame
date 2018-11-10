@@ -15,26 +15,25 @@ namespace game {
 			utils::RandInt ri(0, 3); // four sied zombies will spawn at
 			auto result{ ri() };
 
-			int xMin = arena.left + 50;
-			int xMax = arena.width - 50;
-			int yMin = arena.top + 50;
-			int yMax = arena.height - 50;
+			float xMin = static_cast<float>(arena.left) + 50.f;
+			float xMax = static_cast<float>(arena.width) - 50.f;
+			float yMin = static_cast<float>(arena.top) + 50.f;
+			float yMax = static_cast<float>(arena.height) - 50.f;
+
+			utils::RandFloatMT rfX{ xMin,xMax };
+			utils::RandFloatMT rfY{ yMin, yMax };
 
 			// we will be generating axis position of zombie using this
 			srand(int(time(0) * result));
 			
 			switch (result) {
-			case 0: return { static_cast<float>(xMin),
-				static_cast<float>(rand() % yMax + yMin) };
-			case 1: return { static_cast<float>(yMin),
-				static_cast<float>(rand() % xMax + xMin) };
-			case 2: return { static_cast<float>(xMax),
-				static_cast<float>(rand() % yMax + yMin) };
-			case 3: return { static_cast<float>(yMax),
-				static_cast<float>(rand() % xMax + xMin) };
+			case 0: return { xMin, rfY() };
+			case 1: return { yMin, rfX() };
+			case 2: return { xMax, rfY() };
+			case 3: return { yMax, rfX() };
 			}
 
-			//assert("Wrong number generated");
+			assert("Wrong number generated");
 			return { 0, 0 };
 		}
 

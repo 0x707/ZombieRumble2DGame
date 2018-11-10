@@ -1,20 +1,26 @@
 #include "Player.h"
 #include "Horde.h"
+#include "Arms.h"
 
 #ifndef GAMEPLAY_CLASS_H_
 #define GAMEPLAY_CLASS_H_
 
-namespace game {	
+namespace game {
 
 	enum class game_state {
 		PAUSED, LEVELING, GAME_OVER, PLAYING
 	};
 
+	// this class needs some refactor to become easier to read
 	struct GameTime
 	{
 		static Time clock_restart() { return s_sClock.restart(); }
 		float delta_asSeconds() const { return sDeltaTime.asSeconds(); }
+		Time const& get_total_game_time() const { return sGameTotalTime; }
+		void set_delta_time() { sDeltaTime = GameTime::clock_restart(); }
+		void update_total_game_time() { sGameTotalTime += sDeltaTime; }
 
+	private:
 		Time sGameTotalTime = sf::Time::Zero;
 		Time sDeltaTime = sf::Time::Zero;
 		static Clock s_sClock;
@@ -45,11 +51,12 @@ namespace game {
 		void set_playing() { state_ = game_state::PLAYING; }
 		void set_leveling() { state_ = game_state::LEVELING; }
 
+		Vector2f const& get_mouse_world_pos() const { return mouseWorldPosition_; }
 		IntRect const& get_arena() const { return arena_; }
-		void set_arena(IntRect const& arena) { arena_ = arena; }
+		void set_arena(int widht, int height) { arena_ = { 0,0,widht,height }; }
 
 		void update(GameTime& time, GameScreen& screen, Player& player,
-			ZombieHorde& horde);
+			ZombieHorde& horde, arms::Gun& gun);
 	private:
 		game_state state_{ game_state::GAME_OVER };
 		IntRect arena_;

@@ -10,6 +10,7 @@ void control_motion(Window&, Player&);
 void control_upgrades(Game&, Event&);
 void prepare_level(Game&, Player&, GameTime&);
 void draw_horde(GameScreen&, ZombieHorde const&);
+void draw_bullets(GameScreen&, arms::Gun const&);
 
 int main()
 {
@@ -23,6 +24,7 @@ int main()
 	GameTime time;
 	Background bg;
 	ZombieHorde horde;
+	arms::Gun gun;
 	
 	// some temporary vars
 	int numZombies = 0;
@@ -44,7 +46,8 @@ int main()
 					theGame.set_leveling();
 
 				if (theGame.playing()) {
-
+					if (event.key.code == KB::R)
+						gun.reload();
 				}
 			}
 		} // event poll
@@ -52,14 +55,18 @@ int main()
 		if (KB::isKeyPressed(KB::Escape))
 			screen.sWindow.close();
 
-		if (theGame.playing())
+		if (theGame.playing()) {
 			control_motion(screen.sWindow, player);
+			if (Mouse::isButtonPressed(Mouse::Left))
+				gun.shot(time.get_total_game_time(),
+					player.getCenter(), theGame.get_mouse_world_pos());
+		}
 
 		if (theGame.leveling()) {
 			control_upgrades(theGame, event);
 
 			if (theGame.playing()) {
-				theGame.set_arena({ 0,0,500,500 }); // left, top, width, height
+				theGame.set_arena(500,500); // left, top, width, height
 				bg.create(theGame.get_arena());
 				player.spawn(theGame.get_arena(), resolution, game::TILE_SIZE);
 
@@ -74,7 +81,7 @@ int main()
 
 		// update each frame
 		if (theGame.playing())
-			theGame.update(time, screen, player, horde);
+			theGame.update(time, screen, player, horde, gun);
 
 		switch (theGame.get_state()) {
 		case game_state::PLAYING:
@@ -83,6 +90,7 @@ int main()
 			screen.sWindow.draw(bg.get_background_VA(), &bg());
 			screen.sWindow.draw(player.getSprite());
 			draw_horde(screen, horde);
+			draw_bullets(screen, gun);
 			break;
 		case game_state::LEVELING:
 		case game_state::PAUSED:
@@ -138,4 +146,11 @@ void draw_horde(GameScreen& screen, ZombieHorde const& horde)
 {
 	for (unsigned i = 0; i < horde.zombie_counter(); ++i)
 		screen.sWindow.draw(horde[i]->get_sprite());
+}
+
+void draw_bullets(GameScreen& screen, arms::Gun const& gun)
+{
+	for (int i = 0; i < arms::MAX_BULLETS; ++i)
+		if (gun.get_bullet(i).is_inFlight())
+			screen.sWindow.draw(gun.get_bullet(i).get_shape());
 }

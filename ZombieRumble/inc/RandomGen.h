@@ -15,6 +15,18 @@ namespace utils {
 		std::uniform_int_distribution<> dist; // TODO rewrite it with mt19937
 	};
 
+	class RandFloatMT
+	{
+	public:
+		RandFloatMT(float low, float high)
+			: re{ std::random_device{}() }
+			, dist{ low,high } {}
+		float operator()() { return dist(re); }
+	private:
+		std::uniform_real_distribution<float> dist;
+		std::mt19937_64 re;
+	};
+
 } // namespace utils
 
 #endif // ! RANDOM_INT_GEN_CLASS_H_
