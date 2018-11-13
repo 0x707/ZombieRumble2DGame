@@ -36,6 +36,16 @@ namespace game {
 		View sViewMain;
 	};
 
+	struct GameCursor
+	{
+		GameCursor();
+		void set_cursor_to_corsshair();
+
+		Sprite crosshair;
+		Vector2f mouseWorldPosition_;
+		Vector2i mouseScreenPosition_;
+	};
+
 	class Game
 	{
 	public:
@@ -51,7 +61,8 @@ namespace game {
 		void set_playing() { state_ = game_state::PLAYING; }
 		void set_leveling() { state_ = game_state::LEVELING; }
 
-		Vector2f const& get_mouse_world_pos() const { return mouseWorldPosition_; }
+		Vector2f const& get_mouse_world_pos() const { return cursor_.mouseWorldPosition_; }
+		Sprite const& get_cursor_sprite() const { return cursor_.crosshair; }
 		IntRect const& get_arena() const { return arena_; }
 		void set_arena(int widht, int height) { arena_ = { 0,0,widht,height }; }
 
@@ -60,10 +71,8 @@ namespace game {
 	private:
 		game_state state_{ game_state::GAME_OVER };
 		IntRect arena_;
-		Vector2f mouseWorldPosition_;
-		Vector2i mouseScreenPosition_;
+		GameCursor cursor_;
 	};
-
 
 } // namespace game
 

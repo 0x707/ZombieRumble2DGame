@@ -39,21 +39,20 @@ namespace game {
 
 	} // annonymous namespace
 
-	ZombieHorde::ZombieHorde()
-		: theHorde_{ nullptr }, zombieCounter_{ 0 }
+	ZombieHorde::ZombieHorde(unsigned zombies)
+		: theHorde_{ nullptr }, zombieCounter_{ zombies }
+		, zombiesAlive_{ zombieCounter_ }
 	{
 	}
 
-	void ZombieHorde::prepare_horde(unsigned amount, IntRect const& arena)
+	void ZombieHorde::prepare_horde(IntRect const& arena)
 	{
 		//assert(amount > MAX_NO_ZOMBIE);
 		//assert(amount <= 0);
-
-		zombieCounter_ = amount;;
-
+		zombieCounter_ = zombiesAlive_;
 		utils::RandInt ri{ MIN, MAX };
 
-		for (unsigned i = 0; i < amount; ++i) {
+		for (unsigned i = 0; i < zombieCounter_; ++i) {
 			auto zombieType{ ri() };
 			auto zombiePos{ spawn_coords(arena) };
 

@@ -9,7 +9,7 @@ namespace game {
 	class ZombieHorde
 	{
 	public:
-		ZombieHorde();
+		ZombieHorde(unsigned);
 		~ZombieHorde();
 
 		ZombieHorde(ZombieHorde const&) = delete;
@@ -20,7 +20,7 @@ namespace game {
 		ZombieBase* operator[](unsigned);
 		ZombieBase const* operator[](unsigned) const;
 
-		void prepare_horde(unsigned, IntRect const&);
+		void prepare_horde(IntRect const&);
 		void release_mem();
 		ZombieBase const* const* get_horde() { return theHorde_; }
 		unsigned zombie_counter() const { return zombieCounter_; }
@@ -28,6 +28,7 @@ namespace game {
 	private:
 		ZombieBase* theHorde_[MAX_NO_ZOMBIE];
 		unsigned zombieCounter_;
+		unsigned zombiesAlive_;
 	};
 
 } // namespace game

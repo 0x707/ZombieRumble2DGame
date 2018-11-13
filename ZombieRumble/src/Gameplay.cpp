@@ -9,7 +9,21 @@ namespace game {
 			static_cast<unsigned>(res.y)}, title, style }
 		, sViewMain{ {0,0,res.x,res.y} }
 	{
+		sWindow.setMouseCursorVisible(false);
 	}
+
+	GameCursor::GameCursor()
+		: crosshair{ TextureHolder::get_instance().texture(
+			"graphics/crosshair.png") }
+	{
+		crosshair.setOrigin(25, 25);
+	}
+
+	void GameCursor::set_cursor_to_corsshair() {
+		crosshair.setPosition(mouseWorldPosition_);
+	}
+
+	// Game update
 
 	void Game::update(GameTime& time, GameScreen& screen, Player& player,
 		ZombieHorde& horde, arms::Gun& gun)
@@ -17,9 +31,10 @@ namespace game {
 		time.set_delta_time();
 		time.update_total_game_time();
 
-		mouseScreenPosition_ = Mouse::getPosition();
-		mouseWorldPosition_ = screen.sWindow.mapPixelToCoords(
+		cursor_.mouseScreenPosition_ = Mouse::getPosition();
+		cursor_.mouseWorldPosition_ = screen.sWindow.mapPixelToCoords(
 			Mouse::getPosition(), screen.sViewMain );
+		cursor_.set_cursor_to_corsshair();
 
 		player.update(time.delta_asSeconds(), Mouse::getPosition());
 		screen.sViewMain.setCenter(player.getCenter());

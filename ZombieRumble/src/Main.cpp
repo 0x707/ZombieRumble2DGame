@@ -23,13 +23,8 @@ int main()
 	Player player;
 	GameTime time;
 	Background bg;
-	ZombieHorde horde;
+	ZombieHorde horde{ 10 }; // ctor argument defines the amount zombies to spawn
 	arms::Gun gun;
-	
-	// some temporary vars
-	int numZombies = 0;
-	int numZombiesAlive = 0;
-
 
 	while (screen.sWindow.isOpen()) {
 
@@ -70,10 +65,8 @@ int main()
 				bg.create(theGame.get_arena());
 				player.spawn(theGame.get_arena(), resolution, game::TILE_SIZE);
 
-				numZombies = 10; // TODO reorganize this code
 				horde.release_mem();
-				horde.prepare_horde(numZombies, theGame.get_arena());
-				numZombiesAlive = numZombies;
+				horde.prepare_horde(theGame.get_arena());
 
 				time.clock_restart();
 			}
@@ -91,6 +84,7 @@ int main()
 			screen.sWindow.draw(player.getSprite());
 			draw_horde(screen, horde);
 			draw_bullets(screen, gun);
+			screen.sWindow.draw(theGame.get_cursor_sprite());
 			break;
 		case game_state::LEVELING:
 		case game_state::PAUSED:
