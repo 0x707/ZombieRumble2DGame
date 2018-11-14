@@ -19,7 +19,7 @@ int main()
 		static_cast<float>(VideoMode::getDesktopMode().height) };
 	
 	GameScreen screen{ resolution, "ZombieRumble", Style::Fullscreen };
-	Game theGame;
+	Game theGame{ 500,500 };
 	Player player;
 	GameTime time;
 	Background bg;

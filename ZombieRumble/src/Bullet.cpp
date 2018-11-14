@@ -11,9 +11,9 @@ namespace arms {
 		float gradient = (startPos.x - targetPos.x) /
 			(startPos.y - targetPos.y);
 
-		float ratioXY = bData_.sBulletSpeed / (1 + std::fabs(gradient));
+		float ratioXY = bData_.sBulletSpeed / (1 + std::abs(gradient));
 		bData_.sBulletDist.y = ratioXY;
-		bData_.sBulletDist.x = ratioXY * std::fabs(gradient);
+		bData_.sBulletDist.x = ratioXY * std::abs(gradient);
 		if (startPos.x > targetPos.x)
 			bData_.sBulletDist.x *= -1;
 		if (startPos.y > targetPos.y)

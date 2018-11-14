@@ -50,6 +50,7 @@ namespace game {
 	{
 	public:
 		Game() {}
+		Game(int, int);
 
 		game_state const& get_state() const { return state_; }
 		bool game_over() const { return state_ == game_state::GAME_OVER; }

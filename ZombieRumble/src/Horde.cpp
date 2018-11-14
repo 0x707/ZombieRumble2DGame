@@ -37,7 +37,7 @@ namespace game {
 			return { 0, 0 };
 		}
 
-	} // annonymous namespace
+	} // anonymous namespace
 
 	ZombieHorde::ZombieHorde(unsigned zombies)
 		: theHorde_{ nullptr }, zombieCounter_{ zombies }

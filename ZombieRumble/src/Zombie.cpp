@@ -9,7 +9,7 @@ namespace game {
 		constexpr unsigned OFFSET = MAX_VARIANCE - 20;
 		utils::RandInt ri{ OFFSET, MAX_VARIANCE };
 
-	} // annonymous namespace
+	} // anonymous namespace
 
 	ZombieBase::ZombieBase(char const* path, Vector2f const& pos,
 		float speed, int hp)

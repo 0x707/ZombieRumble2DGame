@@ -23,7 +23,12 @@ namespace game {
 		crosshair.setPosition(mouseWorldPosition_);
 	}
 
-	// Game update
+	// Game class
+
+	Game::Game(int width, int height)
+		: arena_{ 0,0,width,height }
+	{
+	}
 
 	void Game::update(GameTime& time, GameScreen& screen, Player& player,
 		ZombieHorde& horde, arms::Gun& gun)
