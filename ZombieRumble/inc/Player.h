@@ -16,12 +16,13 @@ namespace {
 		int sTileSize;
 	};
 
+	enum class DIRS {DOWN, LEFT, RIGHT, UP}; // order is alphabetic
 	struct Controls
 	{
-		bool sUpPressed = false;
-		bool sDownPressed = false;
-		bool sLeftPressed = false;
-		bool sRightPressed = false;
+		bool operator()(DIRS dir) const { return sDirections[static_cast<int>(dir)]; }
+		void operator()(DIRS dir, bool state) {
+			sDirections[static_cast<int>(dir)] = state; }
+		bool sDirections[4];
 	};
 
 	struct PlayerData
@@ -58,15 +59,7 @@ namespace game {
 		Sprite const& getSprite() const { return pData_.sSprite; }
 		int getHealth() const { return pData_.sHealth; }
 
-		void moveLeft() { controls_.sLeftPressed = true; }
-		void moveRight() { controls_.sRightPressed = true;  }
-		void moveUp() { controls_.sUpPressed = true; }
-		void moveDown() { controls_.sDownPressed = true; }
-		void stopLeft() { controls_.sLeftPressed = false; }
-		void stopRight() { controls_.sRightPressed = false; }
-		void stopUp() { controls_.sUpPressed = false; }
-		void stopDown() { controls_.sDownPressed = false; }
-
+		void move(DIRS dir, bool state) { controls_(dir, state); }
 		void update(float elapsedTime, Vector2i const& mousePosition);
 		void upgradeSpeed() { pData_.sSpeed += static_cast<int>(pData_.START_SPEED * 0.2f); }
 		void upgradeHealth() { pData_.sHealth += static_cast<int>(pData_.START_HEALTH * 0.2f); }

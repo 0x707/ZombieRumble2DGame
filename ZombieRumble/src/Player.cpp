@@ -39,13 +39,13 @@ namespace game {
 
 	void Player::update(float elapsedTime, Vector2i const &mousePosition)
 	{
-		if (controls_.sLeftPressed)
+		if (controls_(DIRS::LEFT))
 			pData_.sPosition.x -= elapsedTime * pData_.sSpeed;
-		if (controls_.sRightPressed)
+		if (controls_(DIRS::RIGHT))
 			pData_.sPosition.x += elapsedTime * pData_.sSpeed;
-		if (controls_.sUpPressed)
+		if (controls_(DIRS::UP))
 			pData_.sPosition.y -= elapsedTime * pData_.sSpeed;
-		if (controls_.sDownPressed)
+		if (controls_(DIRS::DOWN))
 			pData_.sPosition.y += elapsedTime * pData_.sSpeed;
 		pData_.sSprite.setPosition(pData_.sPosition);
 		

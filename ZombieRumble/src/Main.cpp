@@ -101,21 +101,21 @@ int main()
 void control_motion(Window& window, Player& player)
 {
 	if (KB::isKeyPressed(KB::A))
-		player.moveLeft();
+		player.move(DIRS::LEFT, true);
 	else
-		player.stopLeft();
+		player.move(DIRS::LEFT, false);
 	if (KB::isKeyPressed(KB::D))
-		player.moveRight();
+		player.move(DIRS::RIGHT, true);
 	else
-		player.stopRight();
+		player.move(DIRS::RIGHT, false);
 	if (KB::isKeyPressed(KB::W))
-		player.moveUp();
+		player.move(DIRS::UP, true);
 	else
-		player.stopUp();
+		player.move(DIRS::UP, false);
 	if (KB::isKeyPressed(KB::S))
-		player.moveDown();
+		player.move(DIRS::DOWN, true);
 	else
-		player.stopDown();
+		player.move(DIRS::DOWN, false);
 }
 
 void control_upgrades(Game& game, Event& event)
