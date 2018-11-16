@@ -4,7 +4,7 @@
 #ifndef PLAYER_CLASS_H_
 #define PLAYER_CLASS_H_
 
-namespace {
+namespace game {
 
 	// This namespace holds all information that Player class needs to maitain its functionality.
 	using namespace sf;
@@ -38,9 +38,6 @@ namespace {
 			"graphics/player.png")};
 		Time sLastHit;
 	};
-} // anonymous namespace
-
-namespace game {
 
 	class Player
 	{

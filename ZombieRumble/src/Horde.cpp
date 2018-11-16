@@ -22,9 +22,6 @@ namespace game {
 
 			utils::RandFloatMT rfX{ xMin,xMax };
 			utils::RandFloatMT rfY{ yMin, yMax };
-
-			// we will be generating axis position of zombie using this
-			srand(int(time(0) * result));
 			
 			switch (result) {
 			case 0: return { xMin, rfY() };

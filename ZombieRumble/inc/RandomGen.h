@@ -12,7 +12,7 @@ namespace utils {
 		unsigned operator()() { return dist(re); }
 	private:
 		std::default_random_engine re;
-		std::uniform_int_distribution<> dist; // TODO rewrite it with mt19937
+		std::uniform_int_distribution<unsigned> dist;
 	};
 
 	class RandFloatMT

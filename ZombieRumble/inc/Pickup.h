@@ -25,6 +25,11 @@ namespace pickup {
 
 	class Supply
 	{
+	public:
+		void set_spawn_coords();
+		FloatRect get_position() const { return box_.sSprite.getGlobalBounds(); }
+		Sprite const& get_sprite() const { return box_.sSprite; }
+		bool is_spawned() const { return box_.sSpawned; }
 	protected:
 		Supply(IntRect const&, char const*);
 	private:
