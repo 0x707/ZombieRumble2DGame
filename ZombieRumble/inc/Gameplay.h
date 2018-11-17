@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Horde.h"
 #include "Arms.h"
+#include "Pickup.h"
 
 #ifndef GAMEPLAY_CLASS_H_
 #define GAMEPLAY_CLASS_H_
@@ -46,10 +47,17 @@ namespace game {
 		Vector2i mouseScreenPosition_;
 	};
 
+	struct Supplies
+	{
+		Supplies(IntRect const&);
+
+		pickup::AmmoSupply ammo_pack;
+		pickup::HealthSupply health_pack;
+	};
+
 	class Game
 	{
 	public:
-		Game() {}
 		Game(int, int);
 
 		game_state const& get_state() const { return state_; }
@@ -67,12 +75,15 @@ namespace game {
 		IntRect const& get_arena() const { return arena_; }
 		void set_arena(int widht, int height) { arena_ = { 0,0,widht,height }; }
 
+		Supplies const& get_supplies() const { return supplies_; }
+
 		void update(GameTime& time, GameScreen& screen, Player& player,
 			ZombieHorde& horde, arms::Gun& gun);
 	private:
 		game_state state_{ game_state::GAME_OVER };
 		IntRect arena_;
 		GameCursor cursor_;
+		Supplies supplies_;
 	};
 
 } // namespace game

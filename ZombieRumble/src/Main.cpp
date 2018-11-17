@@ -82,6 +82,10 @@ int main()
 			screen.set_main_view();
 			screen.sWindow.draw(bg.get_background_VA(), &bg());
 			screen.sWindow.draw(player.getSprite());
+			if (theGame.get_supplies().ammo_pack.is_spawned())
+				screen.sWindow.draw(theGame.get_supplies().ammo_pack.get_sprite()) // reorganize this code LOL
+			if (theGame.get_supplies().health_pack.is_spawned())
+				screen.sWindow.draw(theGame.get_supplies().health_pack.get_sprite());
 			draw_horde(screen, horde);
 			draw_bullets(screen, gun);
 			screen.sWindow.draw(theGame.get_cursor_sprite());

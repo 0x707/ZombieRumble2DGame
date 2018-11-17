@@ -21,7 +21,6 @@ namespace {
 		box_.sSprite.setTexture(
 			TextureHolder::get_instance().texture(path));
 		box_.sSprite.setOrigin(25, 25);
-		box_.sTillRespawn = SPAWN_TIME;
 		set_spawn_coords();	
 	}
 
@@ -33,8 +32,50 @@ namespace {
 								static_cast<float>(box_.sArena.height) };
 
 		box_.sSprite.setPosition(rfX(), rfY());
-		box_.sLastSpawn = 0;
 		box_.sSpawned = true;
+	}
+
+	void Supply::update(float elapsedTime)
+	{
+		if (box_.sSpawnTime < LIFESPAN)
+			box_.sSpawnTime += elapsedTime;
+		else {
+			box_.sSpawnTime = 0;
+			if (box_.sSpawned)
+				box_.sSpawned = false;
+			else
+				set_spawn_coords();
+		}
+
+	}
+
+	void Supply::upgrade(int upgradeWhat)
+	{
+		box_.sPickupValue += 0.5f / upgradeWhat;
+	}
+
+	// ammunition supply
+
+	AmmoSupply::AmmoSupply(IntRect const& arena)
+		: Supply{ arena, "graphics/ammo_pickup.png" }
+	{
+	}
+
+	void AmmoSupply::upgrade()
+	{
+		Supply::upgrade(AMMO_CAP);
+	}
+
+	// health supply
+
+	HealthSupply::HealthSupply(IntRect const& arena)
+		: Supply{ arena, "graphics/health_pickup.png" }
+	{
+	}
+
+	void HealthSupply::upgrade()
+	{
+		Supply::upgrade(HEALTH_CAP);
 	}
 
 } // namespace pickup

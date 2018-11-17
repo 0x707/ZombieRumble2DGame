@@ -23,10 +23,18 @@ namespace game {
 		crosshair.setPosition(mouseWorldPosition_);
 	}
 
+	// supplies
+
+	Supplies::Supplies(IntRect const& arena)
+		: ammo_pack{ arena }, health_pack{ arena }
+	{
+	}
+
 	// Game class
 
 	Game::Game(int width, int height)
 		: arena_{ 0,0,width,height }
+		, supplies_{ arena_ }
 	{
 	}
 
@@ -52,5 +60,8 @@ namespace game {
 		for (int i = 0; i < arms::MAX_BULLETS; ++i)
 			if (gun.get_bullet(i).is_inFlight())
 				gun.get_bullet(i).update(time.delta_asSeconds());
+
+		supplies_.ammo_pack.update(time.delta_asSeconds());
+		supplies_.health_pack.update(time.delta_asSeconds());
 	}
 } // namespace game
