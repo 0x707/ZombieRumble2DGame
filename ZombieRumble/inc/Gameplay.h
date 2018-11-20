@@ -70,8 +70,11 @@ namespace game {
 		void set_playing() { state_ = game_state::PLAYING; }
 		void set_leveling() { state_ = game_state::LEVELING; }
 
-		Vector2f const& get_mouse_world_pos() const { return cursor_.mouseWorldPosition_; }
 		Sprite const& get_cursor_sprite() const { return cursor_.crosshair; }
+		Sprite const& get_ammo_sprite() const { return supplies_.ammo_pack.get_sprite(); }
+		Sprite const& get_health_sprite() const { return supplies_.health_pack.get_sprite(); }
+
+		Vector2f const& get_mouse_world_pos() const { return cursor_.mouseWorldPosition_; }
 		IntRect const& get_arena() const { return arena_; }
 		void set_arena(int widht, int height) { arena_ = { 0,0,widht,height }; }
 

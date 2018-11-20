@@ -9,7 +9,7 @@ namespace arms {
 		bData_.sPosition = startPos;
 
 		float gradient = (startPos.x - targetPos.x) /
-			(startPos.y - targetPos.y);
+			(startPos.y - targetPos.y);  // WHAT IF startPos.y == targetPos.y? dividing by 0!
 
 		float ratioXY = bData_.sBulletSpeed / (1 + std::abs(gradient));
 		bData_.sBulletDist.y = ratioXY;

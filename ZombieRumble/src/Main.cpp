@@ -11,6 +11,7 @@ void control_upgrades(Game&, Event&);
 void prepare_level(Game&, Player&, GameTime&);
 void draw_horde(GameScreen&, ZombieHorde const&);
 void draw_bullets(GameScreen&, arms::Gun const&);
+void draw_supplies(GameScreen&, Game const&);
 
 int main()
 {
@@ -82,10 +83,7 @@ int main()
 			screen.set_main_view();
 			screen.sWindow.draw(bg.get_background_VA(), &bg());
 			screen.sWindow.draw(player.getSprite());
-			if (theGame.get_supplies().ammo_pack.is_spawned())
-				screen.sWindow.draw(theGame.get_supplies().ammo_pack.get_sprite()) // reorganize this code LOL
-			if (theGame.get_supplies().health_pack.is_spawned())
-				screen.sWindow.draw(theGame.get_supplies().health_pack.get_sprite());
+			draw_supplies(screen, theGame);
 			draw_horde(screen, horde);
 			draw_bullets(screen, gun);
 			screen.sWindow.draw(theGame.get_cursor_sprite());
@@ -151,4 +149,12 @@ void draw_bullets(GameScreen& screen, arms::Gun const& gun)
 	for (int i = 0; i < arms::MAX_BULLETS; ++i)
 		if (gun.get_bullet(i).is_inFlight())
 			screen.sWindow.draw(gun.get_bullet(i).get_shape());
+}
+
+void draw_supplies(GameScreen& screen, Game const& theGame)
+{
+	if (theGame.get_supplies().ammo_pack.is_spawned())
+		screen.sWindow.draw(theGame.get_ammo_sprite());
+	if (theGame.get_supplies().health_pack.is_spawned())
+		screen.sWindow.draw(theGame.get_health_sprite());
 }
