@@ -57,9 +57,12 @@ namespace game {
 				horde[i]->update(time.delta_asSeconds(),
 					player.getCenter());
 
-		for (int i = 0; i < arms::MAX_BULLETS; ++i)
-			if (gun.get_bullet(i).is_inFlight())
-				gun.get_bullet(i).update(time.delta_asSeconds());
+		for (int i = gun.bullets().front(),
+			j = gun.bullets().current_length();
+			j > 0; i = ++i % gun.bullets().size(), --j) {
+			if (!gun[i]->update(time.delta_asSeconds()))
+				gun.bullets().dequeue();
+		}
 
 		supplies_.ammo_pack.update(time.delta_asSeconds());
 		supplies_.health_pack.update(time.delta_asSeconds());

@@ -146,9 +146,10 @@ void draw_horde(GameScreen& screen, ZombieHorde const& horde)
 
 void draw_bullets(GameScreen& screen, arms::Gun const& gun)
 {
-	for (int i = 0; i < arms::MAX_BULLETS; ++i)
-		if (gun.get_bullet(i).is_inFlight())
-			screen.sWindow.draw(gun.get_bullet(i).get_shape());
+	for (int i = gun.bullets().front(),
+		j = gun.bullets().current_length();
+		j > 0; i = ++i % gun.bullets().size(), --j)
+		screen.sWindow.draw(gun[i]->get_shape());
 }
 
 void draw_supplies(GameScreen& screen, Game const& theGame)

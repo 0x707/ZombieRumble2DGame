@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "SimpleQueue.h"
 #include <SFML/System/Time.hpp>
 
 #ifndef ARMS_CLASS_H_
@@ -6,6 +7,7 @@
 
 namespace game {
 namespace arms {
+	using sim_queue = scds::SimpleQueue<Bullet>;
 
 	constexpr int MAX_CAP = 6;
 	constexpr int MAX_BULLETS = 100;
@@ -16,8 +18,7 @@ namespace arms {
 		int sMainClip = MAX_CAP;
 		float sFireRate_ = 1.f;
 		Time sFormerShot = Time::Zero;
-		Bullet sBullets[MAX_BULLETS];
-		int sCurrentBullet = -1;
+		sim_queue sBullets{ 100 };
 	};
 
 	class Gun
@@ -25,11 +26,14 @@ namespace arms {
 	public:
 		Gun() {}
 
+		Bullet* const operator[](int index) { return box_.sBullets[index]; }
+		Bullet const* const operator[](int index) const { return box_.sBullets[index]; }
+
 		void reload();
 		void shot(Time const&, Vector2f const& playerPos,
 			Vector2f const& mousePos);
-		Bullet& get_bullet(int index) { return box_.sBullets[index]; }
-		Bullet const& get_bullet(int index) const { return box_.sBullets[index]; }
+		sim_queue& bullets() { return box_.sBullets; }
+		sim_queue const& bullets() const { return box_.sBullets; }
 	private:
 		BoxGun box_;
 	};

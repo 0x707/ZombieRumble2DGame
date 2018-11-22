@@ -26,7 +26,7 @@ namespace arms {
 		bData_.set_position();
 	}
 
-	void Bullet::update(float elapsedTime)
+	bool Bullet::update(float elapsedTime)
 	{
 		bData_.sPosition.x += bData_.sBulletDist.x * elapsedTime;
 		bData_.sPosition.y += bData_.sBulletDist.y * elapsedTime;
@@ -38,6 +38,7 @@ namespace arms {
 			bData_.sPosition.y > bData_.sBulletRange.sYMax ||
 			bData_.sPosition.y < bData_.sBulletRange.sYMin)
 			bData_.sInFlight = false;
+		return bData_.sInFlight;
 	}
 
 } // namespace arms

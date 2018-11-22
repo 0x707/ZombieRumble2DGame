@@ -29,7 +29,7 @@ namespace arms {
 	public:
 		Bullet() {}
 		void shoot(Vector2f const&, Vector2f const&);
-		void update(float);
+		bool update(float);
 
 		void stop() { bData_.sInFlight = false; }
 		bool is_inFlight() const { return bData_.sInFlight; }
