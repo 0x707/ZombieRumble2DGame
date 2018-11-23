@@ -23,7 +23,7 @@ namespace arms {
 		if (gameTime.asMilliseconds() - box_.sFormerShot.asMilliseconds()
 			> 1000.f / box_.sFireRate_ && box_.sMainClip > 0) {
 			box_.sBullets.enqueue();
-			box_.sBullets[box_.sBullets.front()]->shoot(
+			box_.sBullets[box_.sBullets.rear()]->shoot(
 				playerPos, mousePos);
 			box_.sFormerShot = gameTime;
 			--box_.sMainClip;
