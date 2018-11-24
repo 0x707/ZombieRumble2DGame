@@ -1,4 +1,5 @@
 #include "Gameplay.h"
+#include "Score.h"
 
 namespace game {
 	Clock GameTime::s_sClock{};
@@ -38,33 +39,73 @@ namespace game {
 	{
 	}
 
+	void Game::detect_collisions(ZombieHorde& horde, arms::Gun& gun)
+	{
+		for (int i = gun.bullets().front(), j = gun.bullets().current_length();
+			j > 0; ++i %= gun.bullets().size(), --j) {
+			for (int z = 0; z < horde.zombie_counter(); ++z) {
+				if (horde[z]->is_alive() &&
+					gun[i]->get_position().intersects(
+					horde[z]->get_position())) {
+					gun[i]->stop();
+					if (horde[z]->hit()) {
+						Score::get_instance() + 10;
+						if (horde.kill_zombie() < 0)
+							state_ = game_state::LEVELING;
+					}
+				}
+			}
+		}
+	}
+
 	void Game::update(GameTime& time, GameScreen& screen, Player& player,
 		ZombieHorde& horde, arms::Gun& gun)
 	{
 		time.set_delta_time();
 		time.update_total_game_time();
-
-		cursor_.mouseScreenPosition_ = Mouse::getPosition();
-		cursor_.mouseWorldPosition_ = screen.sWindow.mapPixelToCoords(
-			Mouse::getPosition(), screen.sViewMain );
-		cursor_.set_cursor_to_corsshair();
-
+		
 		player.update(time.delta_asSeconds(), Mouse::getPosition());
 		screen.sViewMain.setCenter(player.getCenter());
 
-		for (unsigned i = 0; i < horde.zombie_counter(); ++i)
-			if (horde[i]->is_alive())
-				horde[i]->update(time.delta_asSeconds(),
-					player.getCenter());
+		update_crosshair(cursor_, screen);
+		update_horde(horde, player, time.delta_asSeconds());
+		update_bullets(gun, time.delta_asSeconds());
+		update_supplies(supplies_, time.delta_asSeconds());
 
+		detect_collisions(horde, gun);
+	}
+
+	// free functions
+
+	void update_crosshair(GameCursor& cursor, GameScreen& screen)
+	{
+		cursor.mouseScreenPosition_ = Mouse::getPosition();
+		cursor.mouseWorldPosition_ = screen.sWindow.mapPixelToCoords(
+			Mouse::getPosition(), screen.sViewMain);
+		cursor.set_cursor_to_corsshair();
+	}
+
+	void update_horde(ZombieHorde& horde, Player& player,
+		float elapsedTime)
+	{
+		for (int i = 0; i < horde.zombie_counter(); ++i)
+			if (horde[i]->is_alive())
+				horde[i]->update(elapsedTime, player.getCenter());
+	}
+
+	void update_bullets(arms::Gun& gun, float elapsedTime)
+	{
 		for (int i = gun.bullets().front(),
 			j = gun.bullets().current_length();
 			j > 0; i = ++i % gun.bullets().size(), --j) {
-			if (!gun[i]->update(time.delta_asSeconds()))
+			if (!gun[i]->update(elapsedTime))
 				gun.bullets().dequeue();
 		}
+	}
 
-		supplies_.ammo_pack.update(time.delta_asSeconds());
-		supplies_.health_pack.update(time.delta_asSeconds());
+	void update_supplies(Supplies& supplies, float elapsedTime)
+	{
+		supplies.ammo_pack.update(elapsedTime);
+		supplies.health_pack.update(elapsedTime);
 	}
 } // namespace game

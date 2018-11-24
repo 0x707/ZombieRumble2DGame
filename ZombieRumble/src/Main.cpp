@@ -82,9 +82,9 @@ int main()
 			screen.sWindow.clear();
 			screen.set_main_view();
 			screen.sWindow.draw(bg.get_background_VA(), &bg());
+			draw_horde(screen, horde);
 			screen.sWindow.draw(player.getSprite());
 			draw_supplies(screen, theGame);
-			draw_horde(screen, horde);
 			draw_bullets(screen, gun);
 			screen.sWindow.draw(theGame.get_cursor_sprite());
 			break;
@@ -140,7 +140,7 @@ void control_upgrades(Game& game, Event& event)
 
 void draw_horde(GameScreen& screen, ZombieHorde const& horde)
 {
-	for (unsigned i = 0; i < horde.zombie_counter(); ++i)
+	for (int i = 0; i < horde.zombie_counter(); ++i)
 		screen.sWindow.draw(horde[i]->get_sprite());
 }
 

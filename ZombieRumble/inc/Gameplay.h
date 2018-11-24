@@ -80,6 +80,7 @@ namespace game {
 
 		Supplies const& get_supplies() const { return supplies_; }
 
+		void detect_collisions(ZombieHorde&, arms::Gun&);
 		void update(GameTime& time, GameScreen& screen, Player& player,
 			ZombieHorde& horde, arms::Gun& gun);
 	private:
@@ -88,6 +89,11 @@ namespace game {
 		GameCursor cursor_;
 		Supplies supplies_;
 	};
+
+	void update_crosshair(GameCursor&, GameScreen&);
+	void update_horde(ZombieHorde&, Player&, float);;
+	void update_bullets(arms::Gun&, float);
+	void update_supplies(Supplies&, float);
 
 } // namespace game
 

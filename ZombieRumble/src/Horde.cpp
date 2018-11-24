@@ -36,7 +36,7 @@ namespace game {
 
 	} // anonymous namespace
 
-	ZombieHorde::ZombieHorde(unsigned zombies)
+	ZombieHorde::ZombieHorde(int zombies)
 		: theHorde_{ nullptr }, zombieCounter_{ zombies }
 		, zombiesAlive_{ zombieCounter_ }
 	{
@@ -49,7 +49,7 @@ namespace game {
 		zombieCounter_ = zombiesAlive_;
 		utils::RandInt ri{ MIN, MAX };
 
-		for (unsigned i = 0; i < zombieCounter_; ++i) {
+		for (int i = 0; i < zombieCounter_; ++i) {
 			auto zombieType{ ri() };
 			auto zombiePos{ spawn_coords(arena) };
 
@@ -64,7 +64,7 @@ namespace game {
 
 	void ZombieHorde::release_mem()
 	{
-		for (unsigned i = 0; i < zombieCounter_; ++i)
+		for (int i = 0; i < zombieCounter_; ++i)
 			delete theHorde_[i];
 		zombieCounter_ = 0;
 	}
@@ -75,14 +75,14 @@ namespace game {
 			release_mem();
 	}
 
-	ZombieBase* ZombieHorde::operator[](unsigned index)
+	ZombieBase* ZombieHorde::operator[](int index)
 	{
 		if (index < zombieCounter_)
 			return theHorde_[index];
 		return nullptr;
 	}
 
-	ZombieBase const* ZombieHorde::operator[](unsigned index) const
+	ZombieBase const* ZombieHorde::operator[](int index) const
 	{
 		if (index < zombieCounter_)
 			return theHorde_[index];

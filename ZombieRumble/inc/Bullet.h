@@ -14,7 +14,7 @@ namespace arms {
 		RectangleShape sBulletShape{ Vector2f{2,2} };
 		Vector2f sPosition;
 		bool sInFlight = false;
-		float sBulletSpeed = 1000.f;
+		float sBulletSpeed = 1500.f;
 		Vector2f sBulletDist;
 		struct BulletRange {
 			float sXMax;
