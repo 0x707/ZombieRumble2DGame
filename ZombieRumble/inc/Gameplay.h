@@ -81,6 +81,8 @@ namespace game {
 		Supplies const& get_supplies() const { return supplies_; }
 
 		void detect_collisions(ZombieHorde&, arms::Gun&);
+		void detect_collisions(ZombieHorde const&, Player&, GameTime const&);
+		void detect_collisions(Player&, arms::Gun const&);
 		void update(GameTime& time, GameScreen& screen, Player& player,
 			ZombieHorde& horde, arms::Gun& gun);
 	private:
