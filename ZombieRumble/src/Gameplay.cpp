@@ -62,7 +62,7 @@ namespace game {
 		GameTime const& time)
 	{
 		for (int i = 0; i < horde.zombie_counter(); ++i) {
-			if (player.getPosition().intersects(horde[i]->get_position())
+			if (player.get_position().intersects(horde[i]->get_position())
 				&& horde[i]->is_alive()) {
 				if (player.hit(time.get_total_game_time())) {
 					// more here soon
@@ -73,11 +73,14 @@ namespace game {
 		}
 	}
 
-	void Game::detect_collisions(Player& player, arms::Gun const& fun)
+	void Game::detect_collisions(Player& player, arms::Gun& gun)
 	{
-		/*if (player.getPosition().intersects(
+		if (player.get_position().intersects(
+			supplies_.health_pack.get_position()))
+			player.increaseHealthLevel(supplies_.health_pack.get_supply());
+		if (player.get_position().intersects(
 			supplies_.ammo_pack.get_position()))
-			player.increaseHealthLevel(supplies_.)*/
+			gun.add_bullets(supplies_.ammo_pack.get_supply());
 	}
 
 	void Game::update(GameTime& time, GameScreen& screen, Player& player,
@@ -96,6 +99,7 @@ namespace game {
 
 		detect_collisions(horde, gun);
 		detect_collisions(horde, player, time);
+		detect_collisions(player, gun);
 	}
 
 	// free functions

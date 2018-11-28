@@ -54,6 +54,12 @@ namespace {
 		box_.sPickupValue += 0.5f / upgradeWhat;
 	}
 
+	int Supply::get_supply(int whichOne)
+	{
+		box_.sSpawned = false;
+		return box_.sPickupValue + whichOne;
+	}
+
 	// ammunition supply
 
 	AmmoSupply::AmmoSupply(IntRect const& arena)
@@ -66,6 +72,11 @@ namespace {
 		Supply::upgrade(AMMO_CAP);
 	}
 
+	int AmmoSupply::get_supply()
+	{
+		return Supply::get_supply(AMMO_CAP);
+	}
+
 	// health supply
 
 	HealthSupply::HealthSupply(IntRect const& arena)
@@ -76,6 +87,11 @@ namespace {
 	void HealthSupply::upgrade()
 	{
 		Supply::upgrade(HEALTH_CAP);
+	}
+
+	int HealthSupply::get_supply()
+	{
+		Supply::get_supply(HEALTH_CAP);
 	}
 
 } // namespace pickup

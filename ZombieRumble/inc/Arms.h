@@ -34,6 +34,7 @@ namespace arms {
 			Vector2f const& mousePos);
 		sim_queue& bullets() { return box_.sBullets; }
 		sim_queue const& bullets() const { return box_.sBullets; }
+		void add_bullets(int amount) { box_.sBulletsLeft += amount; }
 	private:
 		BoxGun box_;
 	};
