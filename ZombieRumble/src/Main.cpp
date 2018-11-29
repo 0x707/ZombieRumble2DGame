@@ -2,6 +2,7 @@
 #include "Arena.h"
 #include "Horde.h"
 #include "TextureHolder.h"
+#include "Drawings.h"
 
 using namespace game;
 using KB = Keyboard;
@@ -26,6 +27,14 @@ int main()
 	Background bg;
 	ZombieHorde horde{ 10 }; // ctor argument defines the amount zombies to spawn
 	arms::Gun gun;
+
+	// HUD sprites & View
+	View hudView({0, 0, screen.sResolution.x, screen.sResolution.y});
+
+	hud::HudSprite gameOver{"graphics/background.png", 0, 0};
+	hud::HudSprite ammoIcon{"graphics/ammo_icon.png", 20, 980};
+
+	hud::HudText pauseText{155, {400, 400}, "Press enter \n to continue", Color::White};
 
 	while (screen.sWindow.isOpen()) {
 
