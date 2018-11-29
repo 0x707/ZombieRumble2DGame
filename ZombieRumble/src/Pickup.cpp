@@ -51,7 +51,7 @@ namespace {
 
 	void Supply::upgrade(int upgradeWhat)
 	{
-		box_.sPickupValue += 0.5f / upgradeWhat;
+		box_.sPickupValue += upgradeWhat / 2;
 	}
 
 	int Supply::get_supply(int whichOne)
@@ -91,7 +91,7 @@ namespace {
 
 	int HealthSupply::get_supply()
 	{
-		Supply::get_supply(HEALTH_CAP);
+		return Supply::get_supply(HEALTH_CAP);
 	}
 
 } // namespace pickup

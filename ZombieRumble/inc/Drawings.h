@@ -27,7 +27,9 @@ namespace hud {
     class HudText
     {
     public:
-        HudText(int, Vector2f const&, char const*, Color);
+        HudText(int, Vector2f const&, Color, char const* = nullptr);
+
+		void add_num_to_str(int);
     private:
         static HudFont font_;
         Text text_;

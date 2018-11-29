@@ -1,5 +1,6 @@
 #include "Drawings.h"
 #include "TextureHolder.h"
+#include <sstream>
 
 namespace hud {
     HudFont HudText::font_{};
@@ -10,7 +11,7 @@ namespace hud {
         sprite_.setPosition(x,y);
     }
 
-    HudText::HudText(int sz, Vector2f const& pos, char const* str, Color c)
+    HudText::HudText(int sz, Vector2f const& pos, Color c, char const* str)
     {
         text_.setFont(font_.sFont);
         text_.setCharacterSize(sz);
@@ -18,5 +19,11 @@ namespace hud {
         text_.setFillColor(c);
         text_.setString(str);
     }
+
+	void HudText::add_num_to_str(int num)
+	{
+		std::stringstream s;
+		s << static_cast<char const*>(text_.getString()) << num;
+	}
 
 } // namespace hud

@@ -15,7 +15,7 @@ namespace pickup {
 	{
 		Sprite sSprite;
 		IntRect sArena;
-		float sPickupValue;
+		int sPickupValue;
 		bool sSpawned;
 		float sSpawnTime = 0.f;
 	};

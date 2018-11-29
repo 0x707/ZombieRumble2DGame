@@ -1,8 +1,9 @@
-#include "Gameplay.h"
 #include "Arena.h"
-#include "Horde.h"
-#include "TextureHolder.h"
 #include "Drawings.h"
+#include "Gameplay.h"
+#include "Horde.h"
+#include "Score.h"
+#include "TextureHolder.h"
 
 using namespace game;
 using KB = Keyboard;
@@ -13,6 +14,8 @@ void prepare_level(Game&, Player&, GameTime&);
 void draw_horde(GameScreen&, ZombieHorde const&);
 void draw_bullets(GameScreen&, arms::Gun const&);
 void draw_supplies(GameScreen&, Game const&);
+
+char const* get_level_up_string();
 
 int main()
 {
@@ -34,7 +37,12 @@ int main()
 	hud::HudSprite gameOver{"graphics/background.png", 0, 0};
 	hud::HudSprite ammoIcon{"graphics/ammo_icon.png", 20, 980};
 
-	hud::HudText pauseText{155, {400, 400}, "Press enter \n to continue", Color::White};
+	hud::HudText pauseText{ 155, {400, 400}, Color::White, "Press Enter \n to continue" };
+	hud::HudText goverText{ 128, {250,850}, Color::White, "Press Enter to play"};
+	hud::HudText levelText{ 80,{150,250}, Color::White, get_level_up_string()};
+	hud::HudText ammoText{ 55,{200,980}, Color::White };
+	hud::HudText scoreText{ 55,{20,0},Color::White };
+	//hud::HudText hiscrText{ 55,{1400,0},Color::White, tostr(Score::get_instance().get_hscore()); }
 
 	while (screen.sWindow.isOpen()) {
 
@@ -167,4 +175,14 @@ void draw_supplies(GameScreen& screen, Game const& theGame)
 		screen.sWindow.draw(theGame.get_ammo_sprite());
 	if (theGame.get_supplies().health_pack.is_spawned())
 		screen.sWindow.draw(theGame.get_health_sprite());
+}
+
+char const* get_level_up_string()
+{
+	return "1 - Increased fire rate\n"
+		"2 - Increased clip size\n"
+		"3 - Increased max health\n"
+		"4 - Increased run speed\n"
+		"5 - Better health supplies\n"
+		"6 - Better ammo supplies";
 }

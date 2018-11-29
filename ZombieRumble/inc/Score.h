@@ -19,6 +19,7 @@ namespace game {
 		int operator+(int value) const { return score_ + value; }
 
 		int get_score() const { return score_; }
+		int get_hscore() const { return high_score_; }
 		void update_high_score() { high_score_ = score_; }
 	private:
 		int score_ = 0;
