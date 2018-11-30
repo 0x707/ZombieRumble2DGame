@@ -1,6 +1,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 #ifndef DRAWINGS_CLASS_H_
 #define DRAWINGS_CLASS_H_
@@ -27,12 +28,18 @@ namespace hud {
     class HudText
     {
     public:
-        HudText(int, Vector2f const&, Color, char const* = nullptr);
-
-		void add_num_to_str(int);
+        HudText(unsigned, Vector2f const&, Color, char const* = nullptr);
     private:
         static HudFont font_;
         Text text_;
+    };
+
+    struct HealthBar
+    {
+    public:
+        HealthBar();
+    private:
+        RectangleShape bar_;
     };
 
 } // namespace hud

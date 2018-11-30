@@ -42,7 +42,11 @@ int main()
 	hud::HudText levelText{ 80,{150,250}, Color::White, get_level_up_string()};
 	hud::HudText ammoText{ 55,{200,980}, Color::White };
 	hud::HudText scoreText{ 55,{20,0},Color::White };
-	//hud::HudText hiscrText{ 55,{1400,0},Color::White, tostr(Score::get_instance().get_hscore()); }
+	hud::HudText hiscrText{ 55,{1400,0},Color::White, "High score: " };
+	hud::HudText zmbiermainText{55, {1500, 980}, Color::White, "Zombies: 100" };
+	hud::HudText waveremainText{55, {1250, 980}, Color::White, "Wave: 0" };
+
+	hud::HealthBar hpBar;
 
 	while (screen.sWindow.isOpen()) {
 
