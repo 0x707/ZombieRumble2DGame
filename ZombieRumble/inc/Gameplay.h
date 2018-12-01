@@ -1,7 +1,5 @@
-#include "Player.h"
-#include "Horde.h"
-#include "Arms.h"
 #include "Pickup.h"
+#include "HUD.h"
 
 #ifndef GAMEPLAY_CLASS_H_
 #define GAMEPLAY_CLASS_H_

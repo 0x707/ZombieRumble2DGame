@@ -35,6 +35,7 @@ namespace arms {
 		sim_queue& bullets() { return box_.sBullets; }
 		sim_queue const& bullets() const { return box_.sBullets; }
 		void add_bullets(int amount) { box_.sBulletsLeft += amount; }
+		BoxGun const& get_clip() const { return box_; }
 	private:
 		BoxGun box_;
 	};

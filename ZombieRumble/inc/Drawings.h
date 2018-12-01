@@ -1,13 +1,27 @@
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/Text.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
+#include "Player.h"
 
 #ifndef DRAWINGS_CLASS_H_
 #define DRAWINGS_CLASS_H_
 
 namespace hud {
     using namespace sf;
+
+
+    struct HudFont {
+        HudFont() : sFont{}
+        { sFont.loadFromFile("fonts/zombiecontrol.ttf"); }
+        Font sFont;
+    };
+
+    struct HealthBar
+    {
+    public:
+        HealthBar();
+		void update_hpbar(game::Player const&);
+		RectangleShape const& bar() const { return bar_; }
+    private:
+        RectangleShape bar_;
+    };
 
     class HudSprite
     {
@@ -19,28 +33,17 @@ namespace hud {
         Sprite sprite_;
     };
 
-    struct HudFont {
-        HudFont() : sFont{}
-        { sFont.loadFromFile("fonts/zombiecontrol.ttf"); }
-        Font sFont;
-    };
-
     class HudText
     {
     public:
         HudText(unsigned, Vector2f const&, Color, char const* = nullptr);
+		void set_string(char const* str) { text_.setString(str); }
+		Text const& text() const { return text_; }
     private:
         static HudFont font_;
         Text text_;
     };
 
-    struct HealthBar
-    {
-    public:
-        HealthBar();
-    private:
-        RectangleShape bar_;
-    };
 
 } // namespace hud
 

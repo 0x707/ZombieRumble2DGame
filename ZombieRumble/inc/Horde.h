@@ -23,6 +23,7 @@ namespace game {
 		void prepare_horde(IntRect const&);
 		ZombieBase const* const* get_horde() { return theHorde_; }
 		int zombie_counter() const { return zombieCounter_; }
+		int zombies_alive() const { return zombiesAlive_; }
 		int kill_zombie() { return --zombiesAlive_; }
 
 		void release_mem();

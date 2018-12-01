@@ -14,8 +14,7 @@ void prepare_level(Game&, Player&, GameTime&);
 void draw_horde(GameScreen&, ZombieHorde const&);
 void draw_bullets(GameScreen&, arms::Gun const&);
 void draw_supplies(GameScreen&, Game const&);
-
-char const* get_level_up_string();
+void draw_HUD(GameScreen&, View const&);
 
 int main()
 {
@@ -23,7 +22,7 @@ int main()
 		static_cast<float>(VideoMode::getDesktopMode().width),
 		static_cast<float>(VideoMode::getDesktopMode().height) };
 	
-	GameScreen screen{ resolution, "ZombieRumble", Style::Resize };
+	GameScreen screen{ resolution, "ZombieRumble", Style::Fullscreen };
 	Game theGame{ 500,500 };
 	Player player;
 	GameTime time;
@@ -34,19 +33,6 @@ int main()
 	// HUD sprites & View
 	View hudView({0, 0, screen.sResolution.x, screen.sResolution.y});
 
-	hud::HudSprite gameOver{"graphics/background.png", 0, 0};
-	hud::HudSprite ammoIcon{"graphics/ammo_icon.png", 20, 980};
-
-	hud::HudText pauseText{ 155, {400, 400}, Color::White, "Press Enter \n to continue" };
-	hud::HudText goverText{ 128, {250,850}, Color::White, "Press Enter to play"};
-	hud::HudText levelText{ 80,{150,250}, Color::White, get_level_up_string()};
-	hud::HudText ammoText{ 55,{200,980}, Color::White };
-	hud::HudText scoreText{ 55,{20,0},Color::White };
-	hud::HudText hiscrText{ 55,{1400,0},Color::White, "High score: " };
-	hud::HudText zmbiermainText{55, {1500, 980}, Color::White, "Zombies: 100" };
-	hud::HudText waveremainText{55, {1250, 980}, Color::White, "Wave: 0" };
-
-	hud::HealthBar hpBar;
 
 	while (screen.sWindow.isOpen()) {
 
@@ -108,10 +94,17 @@ int main()
 			draw_supplies(screen, theGame);
 			draw_bullets(screen, gun);
 			screen.sWindow.draw(theGame.get_cursor_sprite());
+
+			draw_HUD(screen, hudView);
 			break;
 		case game_state::LEVELING:
+			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().gameOver.sprite());
+			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().levelText.text());
 		case game_state::PAUSED:
+			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().pauseText.text());
 		case game_state::GAME_OVER:
+			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().gameOver.sprite());
+			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().goverText.text());
 			break;
 		};
 		screen.sWindow.display();
@@ -181,12 +174,16 @@ void draw_supplies(GameScreen& screen, Game const& theGame)
 		screen.sWindow.draw(theGame.get_health_sprite());
 }
 
-char const* get_level_up_string()
+void draw_HUD(GameScreen& screen, View const& view)
 {
-	return "1 - Increased fire rate\n"
-		"2 - Increased clip size\n"
-		"3 - Increased max health\n"
-		"4 - Increased run speed\n"
-		"5 - Better health supplies\n"
-		"6 - Better ammo supplies";
+	hud::HUD const& h = hud::HUD::get_instance();
+	screen.sWindow.setView(view);
+
+	screen.sWindow.draw(h.get_drawings().ammoIcon.sprite());
+	screen.sWindow.draw(h.get_drawings().ammoText.text());
+	screen.sWindow.draw(h.get_drawings().scoreText.text());
+	screen.sWindow.draw(h.get_drawings().hiscrText.text());
+	screen.sWindow.draw(h.get_drawings().hpBar.bar());
+	screen.sWindow.draw(h.get_drawings().waveremainText.text());
+	screen.sWindow.draw(h.get_drawings().zmbiermainText.text());
 }

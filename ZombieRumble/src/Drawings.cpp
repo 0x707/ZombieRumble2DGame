@@ -17,10 +17,17 @@ namespace hud {
         text_.setFillColor(c);
     }
 
+	// HP BAR
+
     HealthBar::HealthBar()
     {
         bar_.setPosition(450, 980);
         bar_.setFillColor(Color::Red);
     } 
+
+	void HealthBar::update_hpbar(game::Player const& player)
+	{
+		bar_.setSize(Vector2f{ static_cast<float>(player.getHealth()) * 3.f, 50.f });
+	}
 
 } // namespace hud

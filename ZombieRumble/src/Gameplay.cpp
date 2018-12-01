@@ -100,6 +100,8 @@ namespace game {
 		detect_collisions(horde, gun);
 		detect_collisions(horde, player, time);
 		detect_collisions(player, gun);
+
+		hud::HUD::get_instance().update(player, gun, horde);
 	}
 
 	// free functions
