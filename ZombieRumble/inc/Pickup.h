@@ -29,9 +29,9 @@ namespace pickup {
 		bool is_spawned() const { return box_.sSpawned; }
 		void update(float elapsedTime);
 		void upgrade(int upgradeWhat);
-		int get_supply(int whichOne);
+		int get_supply();
 	protected:
-		Supply(IntRect const&, char const*);
+		Supply(IntRect const&, char const*, int);
 	private:
 		BoxSupply box_;
 	};
@@ -41,7 +41,6 @@ namespace pickup {
 	public:
 		AmmoSupply(IntRect const&);
 		void upgrade();
-		int get_supply();
 	};
 
 	class HealthSupply : public Supply
@@ -49,7 +48,6 @@ namespace pickup {
 	public:
 		HealthSupply(IntRect const&);
 		void upgrade();
-		int get_supply();
 	};
 
 } // namespace pickup

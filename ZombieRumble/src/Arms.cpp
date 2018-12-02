@@ -21,7 +21,7 @@ namespace arms {
 		Vector2f const& mousePos)
 	{
 		if (gameTime.asMilliseconds() - box_.sFormerShot.asMilliseconds()
-			> 1000.f / box_.sFireRate_ && box_.sMainClip > 0) {
+			> 1000.f / box_.sFireRate && box_.sMainClip > 0) {
 			box_.sBullets.enqueue();
 			box_.sBullets[box_.sBullets.rear()]->shoot(
 				playerPos, mousePos);

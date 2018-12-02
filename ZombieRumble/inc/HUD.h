@@ -43,8 +43,8 @@ namespace hud {
 
 		BoxHUD box_;
 		int lastUpdateFrames_;
-		int fpsInterval_ = 1000;
-		int wave_ = 0;
+		int fpsInterval_ = 200;
+		int wave_ = 1;
 		std::stringstream ss_;
 	};
 

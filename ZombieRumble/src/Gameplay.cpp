@@ -76,10 +76,10 @@ namespace game {
 	void Game::detect_collisions(Player& player, arms::Gun& gun)
 	{
 		if (player.get_position().intersects(
-			supplies_.health_pack.get_position()))
+			supplies_.health_pack.get_position()) && supplies_.health_pack.is_spawned())
 			player.increaseHealthLevel(supplies_.health_pack.get_supply());
 		if (player.get_position().intersects(
-			supplies_.ammo_pack.get_position()))
+			supplies_.ammo_pack.get_position()) && supplies_.ammo_pack.is_spawned())
 			gun.add_bullets(supplies_.ammo_pack.get_supply());
 	}
 

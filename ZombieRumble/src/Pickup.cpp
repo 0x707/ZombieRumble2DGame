@@ -15,12 +15,14 @@ namespace {
 
 } // anonymous namespace
 
-	Supply::Supply(IntRect const& arena, char const* path)
+	Supply::Supply(IntRect const& arena, char const* path,
+		int suppValue)
 	{
 		box_.sArena = set_arena(arena);
 		box_.sSprite.setTexture(
 			TextureHolder::get_instance().texture(path));
 		box_.sSprite.setOrigin(25, 25);
+		box_.sPickupValue = suppValue;
 		set_spawn_coords();	
 	}
 
@@ -54,16 +56,16 @@ namespace {
 		box_.sPickupValue += upgradeWhat / 2;
 	}
 
-	int Supply::get_supply(int whichOne)
+	int Supply::get_supply()
 	{
 		box_.sSpawned = false;
-		return box_.sPickupValue + whichOne;
+		return box_.sPickupValue;
 	}
 
 	// ammunition supply
 
 	AmmoSupply::AmmoSupply(IntRect const& arena)
-		: Supply{ arena, "graphics/ammo_pickup.png" }
+		: Supply{ arena, "graphics/ammo_pickup.png", AMMO_CAP }
 	{
 	}
 
@@ -72,26 +74,16 @@ namespace {
 		Supply::upgrade(AMMO_CAP);
 	}
 
-	int AmmoSupply::get_supply()
-	{
-		return Supply::get_supply(AMMO_CAP);
-	}
-
 	// health supply
 
 	HealthSupply::HealthSupply(IntRect const& arena)
-		: Supply{ arena, "graphics/health_pickup.png" }
+		: Supply{ arena, "graphics/health_pickup.png", HEALTH_CAP }
 	{
 	}
 
 	void HealthSupply::upgrade()
 	{
 		Supply::upgrade(HEALTH_CAP);
-	}
-
-	int HealthSupply::get_supply()
-	{
-		return Supply::get_supply(HEALTH_CAP);
 	}
 
 } // namespace pickup

@@ -100,8 +100,10 @@ int main()
 		case game_state::LEVELING:
 			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().gameOver.sprite());
 			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().levelText.text());
+			break;
 		case game_state::PAUSED:
 			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().pauseText.text());
+			break;
 		case game_state::GAME_OVER:
 			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().gameOver.sprite());
 			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().goverText.text());
