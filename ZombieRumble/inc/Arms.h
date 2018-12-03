@@ -17,6 +17,7 @@ namespace arms {
 		int sBulletsLeft = MAX_BULLETS;
 		int sMainClip = MAX_CAP;
 		float sFireRate = 13.f;
+		Time sReloadLock = Time::Zero;
 		Time sFormerShot = Time::Zero;
 		sim_queue sBullets{ MAX_CAP + 1 };
 	};
@@ -29,7 +30,7 @@ namespace arms {
 		Bullet* const operator[](int index) { return box_.sBullets[index]; }
 		Bullet const* const operator[](int index) const { return box_.sBullets[index]; }
 
-		void reload();
+		void reload(Time const&);
 		void shot(Time const&, Vector2f const& playerPos,
 			Vector2f const& mousePos);
 		sim_queue& bullets() { return box_.sBullets; }

@@ -50,7 +50,7 @@ int main()
 
 				if (theGame.playing()) {
 					if (event.key.code == KB::R)
-						gun.reload();
+						gun.reload(time.get_total_game_time());
 				}
 			}
 		} // event poll
