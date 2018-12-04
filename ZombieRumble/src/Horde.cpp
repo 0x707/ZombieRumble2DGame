@@ -40,6 +40,8 @@ namespace game {
 		: theHorde_{ nullptr }, zombieCounter_{ zombies }
 		, zombiesAlive_{ zombieCounter_ }
 	{
+		//if (zombieCounter_ > MAX_NO_ZOMBIE)
+			assert(zombieCounter_ <= MAX_NO_ZOMBIE);
 	}
 
 	void ZombieHorde::prepare_horde(IntRect const& arena)

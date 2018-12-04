@@ -69,7 +69,7 @@ int main()
 			control_upgrades(theGame, event);
 
 			if (theGame.playing()) {
-				theGame.set_arena(500,500); // left, top, width, height
+				//theGame.set_arena(500,500); // left, top, width, height
 				bg.create(theGame.get_arena());
 				player.spawn(theGame.get_arena(), resolution, game::TILE_SIZE);
 
