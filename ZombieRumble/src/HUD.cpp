@@ -57,7 +57,7 @@ namespace hud {
 		t.set_string(ss.str().data());
 		ss.str({});
 
-		ss << "High Score: " << Score::get_instance().get_score();
+		ss << "High Score: " << Score::get_instance().get_hscore();
 		t2.set_string(ss.str().data());
 		ss.str({});
 	}

@@ -49,7 +49,8 @@ namespace game {
 					horde[z]->get_position())) {
 					gun[i]->stop();
 					if (horde[z]->hit()) {
-						Score::get_instance() + 10;
+						Score::get_instance() += 10;
+						Score::get_instance().update_high_score();
 						if (horde.kill_zombie() < 0)
 							state_ = game_state::LEVELING;
 					}
@@ -67,8 +68,10 @@ namespace game {
 				if (player.hit(time.get_total_game_time())) {
 					// more here soon
 				}
-				if (player.getHealth() < -1)
+				if (player.getHealth() < -1) {
 					state_ = game_state::GAME_OVER;
+					Score::get_instance().update_high_score();
+				}
 			}
 		}
 	}

@@ -33,6 +33,7 @@ int main()
 	// HUD sprites & View
 	View hudView({0, 0, screen.sResolution.x, screen.sResolution.y});
 
+	Score::get_instance().load_high_score();
 
 	while (screen.sWindow.isOpen()) {
 
@@ -107,11 +108,13 @@ int main()
 		case game_state::GAME_OVER:
 			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().gameOver.sprite());
 			screen.sWindow.draw(hud::HUD::get_instance().get_drawings().goverText.text());
+
 			break;
 		};
 		screen.sWindow.display();
 	}
 
+	Score::get_instance().save_high_score();
 	horde.release_mem();
 	return 0;
 }

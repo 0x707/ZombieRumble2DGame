@@ -15,12 +15,14 @@ namespace game {
 			return score;
 		}
 
-		int operator+=(int value) { return score_ += value; }
+		int& operator+=(int value) { return score_ += value; }
 		int operator+(int value) const { return score_ + value; }
 
 		int get_score() const { return score_; }
 		int get_hscore() const { return high_score_; }
-		void update_high_score() { high_score_ = score_; }
+		void update_high_score();
+		int load_high_score();
+		void save_high_score() const;
 	private:
 		int score_ = 0;
 		int high_score_ = 0;

@@ -21,6 +21,18 @@ namespace game {
 		sprite_.setPosition(position_);
 	}
 
+	FloatRect ZombieBase::get_position() const
+	{
+		FloatRect fr{ sprite_.getGlobalBounds() };
+		float w = fr.width * 0.3f;
+		float h = fr.height * 0.3f;
+		return FloatRect{
+			fr.left + w,
+			fr.top + h,
+			fr.width - w,
+			fr.height - h };
+	}
+
 	bool ZombieBase::hit()
 	{
 		if (--health_ <= 0) {
