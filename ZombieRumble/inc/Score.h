@@ -20,6 +20,7 @@ namespace game {
 
 		int get_score() const { return score_; }
 		int get_hscore() const { return high_score_; }
+		void reset_score() { score_ = 0; }
 		void update_high_score();
 		int load_high_score();
 		void save_high_score() const;
