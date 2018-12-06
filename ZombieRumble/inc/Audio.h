@@ -19,7 +19,7 @@ namespace game {
             return sounds;
         }
 
-        sf::Sound const& operator[](AUDIO_BUFFER buff) const
+        sf::Sound& operator[](AUDIO_BUFFER buff)
         {
             return audio_arr[buff];
         }
@@ -33,7 +33,7 @@ namespace game {
             return sf::Sound{buffer};
         }
 
-        sf::Sound const audio_arr[7] {
+        sf::Sound audio_arr[7] {
             sound_buffer_factory("../sound/hit.wav"),
             sound_buffer_factory("../sound/pickup.wav"),
             sound_buffer_factory("../sound/powerup.wav"),

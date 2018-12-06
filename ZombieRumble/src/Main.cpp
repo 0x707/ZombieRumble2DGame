@@ -56,6 +56,8 @@ int main()
 				if (theGame.playing()) {
 					if (event.key.code == KB::R)
 						gun.reload(time.get_total_game_time());
+					if (horde.zombies_alive() < 1)
+						theGame.set_leveling();
 				}
 			}
 		} // event poll
@@ -68,8 +70,6 @@ int main()
 			if (Mouse::isButtonPressed(Mouse::Left))
 				gun.shot(time.get_total_game_time(),
 					player.getCenter(), theGame.get_mouse_world_pos());
-			if (horde.zombie_counter() < -1)
-				theGame.set_leveling();
 		}
 
 		if (theGame.leveling()) {
@@ -184,20 +184,20 @@ void reset_game(Game& game, Player& player, Gun& gun)
 void prepare_level(Game& game, GameTime& time,
 	ZombieHorde& horde, Background& bg)
 {
+	HUD::get_instance().increase_wave();
 	int current_wave = HUD::get_instance().get_wave();
 
-	HUD::get_instance().increase_wave();
 	int new_width = 500 + 100 * current_wave;
 	int new_height = 400 + 90 * current_wave;
 
 	game.set_arena(new_width, new_height);
 	bg.create(game.get_arena());
 
-	horde.increase_zombie_wave(current_wave * 5);
 	horde.release_mem();
+	horde.increase_zombie_wave(current_wave * 5);
 	horde.prepare_horde(game.get_arena());
 
-	Sounds::get_instace()[AUDIO_BUFFER::POWERUP];
+	Sounds::get_instace()[AUDIO_BUFFER::POWERUP].play();
 
 	time.clock_restart();	
 }

@@ -66,8 +66,10 @@ namespace game {
 
 	void ZombieHorde::release_mem()
 	{
-		for (int i = 0; i < zombieCounter_; ++i)
-			delete theHorde_[i];
+		if (zombieCounter_ > 0) {
+			for (int i = 0; i < zombieCounter_; ++i)
+				delete theHorde_[i];
+		}
 		zombieCounter_ = 0;
 	}
 
