@@ -77,6 +77,8 @@ namespace game {
 		void set_arena(int widht, int height) { arena_ = { 0,0,widht,height }; }
 
 		Supplies const& get_supplies() const { return supplies_; }
+		void upgrade_health_supply() { supplies_.health_pack.upgrade(); }
+		void upgrade_ammo_supply() { supplies_.ammo_pack.upgrade(); }
 
 		void detect_collisions(ZombieHorde&, arms::Gun&);
 		void detect_collisions(ZombieHorde const&, Player&, GameTime const&);

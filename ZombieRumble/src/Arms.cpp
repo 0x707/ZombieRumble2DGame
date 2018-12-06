@@ -1,4 +1,5 @@
 #include "Arms.h"
+#include "Audio.h"
 
 namespace game {
 namespace arms {
@@ -7,17 +8,21 @@ namespace arms {
 	{
 		if (gameTime.asMilliseconds() - box_.sReloadLock.asMilliseconds() > 1500.f) {
 			int* bLeft = &box_.sBulletsLeft;
-			if (*bLeft >= MAX_CAP)
+			if (*bLeft >= MAX_CAP) {
 				*bLeft -= box_.sMainClip = MAX_CAP;
+				Sounds::get_instace()[AUDIO_BUFFER::RELOAD];
+			}
 			else if (*bLeft > 0) {
 				box_.sMainClip = *bLeft;
 				*bLeft = 0;
+				Sounds::get_instace()[AUDIO_BUFFER::RELOAD];
 			}
-			else {
-				// TODO: here game will be playing audio soon
-			}
-				box_.sReloadLock = gameTime;
+			else
+				Sounds::get_instace()[AUDIO_BUFFER::RELOAD_FAILED];
+			box_.sReloadLock = gameTime;
 		}
+		else
+			Sounds::get_instace()[AUDIO_BUFFER::RELOAD_FAILED];
 	}
 
 	void Gun::shot(Time const& gameTime, Vector2f const& playerPos,
@@ -31,8 +36,17 @@ namespace arms {
 					playerPos, mousePos);
 				box_.sFormerShot = gameTime;
 				--box_.sMainClip;
+
+				Sounds::get_instace()[AUDIO_BUFFER::SHOOT];
 			}
 		}
+	}
+
+	void Gun::reset_gun_stats()
+	{
+		box_.sBulletsLeft = MAX_BULLETS;
+		box_.sMainClip = MAX_CAP;
+		box_.sFireRate = 2.0f;
 	}
 
 } // namespace arms

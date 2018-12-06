@@ -25,6 +25,7 @@ namespace game {
 		int zombie_counter() const { return zombieCounter_; }
 		int zombies_alive() const { return zombiesAlive_; }
 		int kill_zombie() { return --zombiesAlive_; }
+		void increase_zombie_wave(int amount) { zombieCounter_ += amount; }
 
 		void release_mem();
 	private:

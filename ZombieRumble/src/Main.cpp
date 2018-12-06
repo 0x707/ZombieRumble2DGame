@@ -1,4 +1,5 @@
 #include "Arena.h"
+#include "Audio.h"
 #include "Drawings.h"
 #include "Gameplay.h"
 #include "Horde.h"
@@ -6,13 +7,16 @@
 #include "TextureHolder.h"
 
 using namespace game;
+using namespace arms;
+using namespace hud;
 using KB = Keyboard;
 
 void control_motion(Window&, Player&);
-void control_upgrades(Game&, Event&);
-void prepare_level(Game&, Player&, GameTime&);
+void control_upgrades(Event&, Game&, Player&, Gun&);
+void reset_game(Game&, Player&, Gun&);
+void prepare_level(Game&, GameTime&, ZombieHorde&, Background&);
 void draw_horde(GameScreen&, ZombieHorde const&);
-void draw_bullets(GameScreen&, arms::Gun const&);
+void draw_bullets(GameScreen&, Gun const&);
 void draw_supplies(GameScreen&, Game const&);
 void draw_HUD(GameScreen&, View const&);
 
@@ -27,8 +31,8 @@ int main()
 	Player player;
 	GameTime time;
 	Background bg;
-	ZombieHorde horde{ 10 }; // ctor argument defines the amount zombies to spawn
-	arms::Gun gun;
+	ZombieHorde horde{ 5 }; // ctor argument defines the amount zombies to spawn
+	Gun gun;
 
 	// HUD sprites & View
 	View hudView({0, 0, screen.sResolution.x, screen.sResolution.y});
@@ -47,7 +51,7 @@ int main()
 					time.clock_restart();
 				}
 				else if (event.key.code == KB::Return && theGame.game_over())
-					theGame.set_leveling();
+					reset_game(theGame, player, gun);
 
 				if (theGame.playing()) {
 					if (event.key.code == KB::R)
@@ -64,21 +68,18 @@ int main()
 			if (Mouse::isButtonPressed(Mouse::Left))
 				gun.shot(time.get_total_game_time(),
 					player.getCenter(), theGame.get_mouse_world_pos());
+			if (horde.zombie_counter() < -1)
+				theGame.set_leveling();
 		}
 
 		if (theGame.leveling()) {
-			control_upgrades(theGame, event);
+			control_upgrades(event, theGame, player, gun);
 
 			if (theGame.playing()) {
-				//theGame.set_arena(500,500); // left, top, width, height
-				bg.create(theGame.get_arena());
+				prepare_level(theGame, time, horde, bg);
 				player.spawn(theGame.get_arena(), resolution, game::TILE_SIZE);
-
-				horde.release_mem();
-				horde.prepare_horde(theGame.get_arena());
-
-				time.clock_restart();
 			}
+
 		} // end theGame.leveling()
 
 		// update each frame
@@ -139,22 +140,66 @@ void control_motion(Window& window, Player& player)
 		player.move(DIRS::DOWN, false);
 }
 
-void control_upgrades(Game& game, Event& event)
+void control_upgrades(Event& event, Game& game, Player& player, Gun& gun)
 {
 	switch (event.key.code) {
-	case KB::Num1: game.set_playing();
+	case KB::Num1:
+		gun.increase_fire_rate(1.0f);
+		game.set_playing();
 		break;
-	case KB::Num2: game.set_playing();
+	case KB::Num2:
+		gun.increase_clip_size();
+		game.set_playing();
 		break;
-	case KB::Num3: game.set_playing();
+	case KB::Num3:
+		player.upgradeHealth();
+		game.set_playing();
 		break;
-	case KB::Num4: game.set_playing();
+	case KB::Num4:
+		player.upgradeSpeed();
+		game.set_playing();
 		break;
-	case KB::Num5: game.set_playing();
+	case KB::Num5:
+		game.upgrade_health_supply();
+		game.set_playing();
 		break;
-	case KB::Num6: game.set_playing();
+	case KB::Num6:
+		game.upgrade_ammo_supply();
+		game.set_playing();
 		break;
 	}
+}
+
+void reset_game(Game& game, Player& player, Gun& gun)
+{
+	game.set_leveling();
+
+	HUD::get_instance().reset_wave();
+	Score::get_instance().reset_score();
+
+	gun.reset_gun_stats();
+	player.resetPlayerStats();
+}
+
+void prepare_level(Game& game, GameTime& time,
+	ZombieHorde& horde, Background& bg)
+{
+	int current_wave = HUD::get_instance().get_wave();
+
+	HUD::get_instance().increase_wave();
+	int new_width = 500 + 100 * current_wave;
+	int new_height = 400 + 90 * current_wave;
+
+	game.set_arena(new_width, new_height);
+	bg.create(game.get_arena());
+
+	horde.increase_zombie_wave(current_wave * 5);
+	horde.release_mem();
+	horde.prepare_horde(game.get_arena());
+
+	Sounds::get_instace()[AUDIO_BUFFER::POWERUP];
+
+	time.clock_restart();	
 }
 
 void draw_horde(GameScreen& screen, ZombieHorde const& horde)
@@ -163,7 +208,7 @@ void draw_horde(GameScreen& screen, ZombieHorde const& horde)
 		screen.sWindow.draw(horde[i]->get_sprite());
 }
 
-void draw_bullets(GameScreen& screen, arms::Gun const& gun)
+void draw_bullets(GameScreen& screen, Gun const& gun)
 {
 	for (int i = gun.bullets().front(),
 		j = gun.bullets().current_length();

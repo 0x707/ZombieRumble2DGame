@@ -1,3 +1,4 @@
+#include "Audio.h"
 #include "Gameplay.h"
 #include "Score.h"
 
@@ -54,6 +55,7 @@ namespace game {
 						if (horde.kill_zombie() < 0)
 							state_ = game_state::LEVELING;
 					}
+					Sounds::get_instace()[AUDIO_BUFFER::SPLAT];
 				}
 			}
 		}
@@ -65,9 +67,8 @@ namespace game {
 		for (int i = 0; i < horde.zombie_counter(); ++i) {
 			if (player.get_position().intersects(horde[i]->get_position())
 				&& horde[i]->is_alive()) {
-				if (player.hit(time.get_total_game_time())) {
-					// more here soon
-				}
+				if (player.hit(time.get_total_game_time()))
+					Sounds::get_instace()[AUDIO_BUFFER::HIT];
 				if (player.getHealth() < -1) {
 					state_ = game_state::GAME_OVER;
 					Score::get_instance().update_high_score();
@@ -79,11 +80,15 @@ namespace game {
 	void Game::detect_collisions(Player& player, arms::Gun& gun)
 	{
 		if (player.get_position().intersects(
-			supplies_.health_pack.get_position()) && supplies_.health_pack.is_spawned())
+			supplies_.health_pack.get_position()) && supplies_.health_pack.is_spawned()) {
 			player.increaseHealthLevel(supplies_.health_pack.get_supply());
+			Sounds::get_instace()[AUDIO_BUFFER::PICKUP];
+		}
 		if (player.get_position().intersects(
-			supplies_.ammo_pack.get_position()) && supplies_.ammo_pack.is_spawned())
+			supplies_.ammo_pack.get_position()) && supplies_.ammo_pack.is_spawned()) {
 			gun.add_bullets(supplies_.ammo_pack.get_supply());
+			Sounds::get_instace()[AUDIO_BUFFER::RELOAD];
+		}
 	}
 
 	void Game::update(GameTime& time, GameScreen& screen, Player& player,

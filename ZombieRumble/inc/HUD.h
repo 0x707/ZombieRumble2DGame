@@ -38,13 +38,16 @@ namespace hud {
 		static HUD& get_instance();
 		BoxHUD const& get_drawings() const { return box_; }
 		void update(Player const&, Gun const&, ZombieHorde const&);
+		void increase_wave() { ++wave_; }
+		void reset_wave() { wave_ = 0; }
+		int get_wave() const { return wave_; }
 	private:
 		HUD() {}
 
 		BoxHUD box_;
 		int lastUpdateFrames_;
 		int fpsInterval_ = 200;
-		int wave_ = 1;
+		int wave_ = 0;
 		std::stringstream ss_;
 	};
 

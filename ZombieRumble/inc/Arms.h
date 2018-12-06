@@ -9,14 +9,14 @@ namespace game {
 namespace arms {
 	using sim_queue = scds::SimpleQueue<Bullet>;
 
-	constexpr int MAX_CAP = 122;
-	constexpr int MAX_BULLETS = MAX_CAP * 10;
+	constexpr int MAX_CAP = 6;
+	constexpr int MAX_BULLETS = MAX_CAP * 7;
 
 	struct BoxGun
 	{
 		int sBulletsLeft = MAX_BULLETS;
 		int sMainClip = MAX_CAP;
-		float sFireRate = 13.f;
+		float sFireRate = 2.f;
 		Time sReloadLock = Time::Zero;
 		Time sFormerShot = Time::Zero;
 		sim_queue sBullets{ MAX_CAP + 1 };
@@ -37,6 +37,10 @@ namespace arms {
 		sim_queue const& bullets() const { return box_.sBullets; }
 		void add_bullets(int amount) { box_.sBulletsLeft += amount; }
 		BoxGun const& get_clip() const { return box_; }
+
+		void increase_fire_rate(float amount) { box_.sFireRate += amount; }
+		void increase_clip_size() { box_.sMainClip += MAX_CAP; }
+		void reset_gun_stats();
 	private:
 		BoxGun box_;
 	};
