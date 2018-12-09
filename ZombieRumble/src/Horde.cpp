@@ -25,9 +25,9 @@ namespace game {
 			
 			switch (result) {
 			case 0: return { xMin, rfY() };
-			case 1: return { yMin, rfX() };
+			case 1: return { rfX(), yMin };
 			case 2: return { xMax, rfY() };
-			case 3: return { yMax, rfX() };
+			case 3: return { rfX(), yMax };
 			}
 
 			assert("Wrong number generated");

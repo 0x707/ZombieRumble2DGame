@@ -28,10 +28,10 @@ namespace {
 
 	void Supply::set_spawn_coords()
 	{
-		utils::RandFloatMT rfX{ static_cast<float>(box_.sArena.left),
-								static_cast<float>(box_.sArena.width) };
-		utils::RandFloatMT rfY{ static_cast<float>(box_.sArena.top),
-								static_cast<float>(box_.sArena.height) };
+		utils::RandFloatMT rfX{ static_cast<float>(box_.sArena.left) + 50.f,
+								static_cast<float>(box_.sArena.width) - 50.f };
+		utils::RandFloatMT rfY{ static_cast<float>(box_.sArena.top) + 50.f,
+								static_cast<float>(box_.sArena.height) - 50.f };
 
 		box_.sSprite.setPosition(rfX(), rfY());
 		box_.sSpawned = true;

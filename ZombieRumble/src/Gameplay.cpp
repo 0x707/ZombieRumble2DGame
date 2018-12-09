@@ -55,7 +55,7 @@ namespace game {
 						if (horde.kill_zombie() < 0)
 							state_ = game_state::LEVELING;
 					}
-					Sounds::get_instace()[AUDIO_BUFFER::SPLAT];
+					Sounds::get_instance()[AUDIO_BUFFER::SPLAT].play();
 				}
 			}
 		}
@@ -68,7 +68,7 @@ namespace game {
 			if (player.get_position().intersects(horde[i]->get_position())
 				&& horde[i]->is_alive()) {
 				if (player.hit(time.get_total_game_time()))
-					Sounds::get_instace()[AUDIO_BUFFER::HIT];
+					Sounds::get_instance()[AUDIO_BUFFER::HIT].play();
 				if (player.getHealth() < -1) {
 					state_ = game_state::GAME_OVER;
 					Score::get_instance().update_high_score();
@@ -82,12 +82,12 @@ namespace game {
 		if (player.get_position().intersects(
 			supplies_.health_pack.get_position()) && supplies_.health_pack.is_spawned()) {
 			player.increaseHealthLevel(supplies_.health_pack.get_supply());
-			Sounds::get_instace()[AUDIO_BUFFER::PICKUP];
+			Sounds::get_instance()[AUDIO_BUFFER::PICKUP].play();
 		}
 		if (player.get_position().intersects(
 			supplies_.ammo_pack.get_position()) && supplies_.ammo_pack.is_spawned()) {
 			gun.add_bullets(supplies_.ammo_pack.get_supply());
-			Sounds::get_instace()[AUDIO_BUFFER::RELOAD];
+			Sounds::get_instance()[AUDIO_BUFFER::RELOAD].play();
 		}
 	}
 

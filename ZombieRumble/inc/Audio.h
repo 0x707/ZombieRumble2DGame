@@ -13,7 +13,7 @@ namespace game {
     class Sounds
     {
     public:
-        static Sounds& get_instace()
+        static Sounds& get_instance()
         {
             static Sounds sounds{};
             return sounds;
@@ -34,13 +34,13 @@ namespace game {
         }
 
         sf::Sound audio_arr[7] {
-            sound_buffer_factory("../sound/hit.wav"),
-            sound_buffer_factory("../sound/pickup.wav"),
-            sound_buffer_factory("../sound/powerup.wav"),
-            sound_buffer_factory("../sound/reload_failed.wav"),
-            sound_buffer_factory("../sound/reload.wav"),
-            sound_buffer_factory("../sound/shoot.wav"),
-            sound_buffer_factory("../sound/splat.wav")
+            sound_buffer_factory("sound/hit.wav"),
+            sound_buffer_factory("sound/pickup.wav"),
+            sound_buffer_factory("sound/powerup.wav"),
+            sound_buffer_factory("sound/reload_failed.wav"),
+            sound_buffer_factory("sound/reload.wav"),
+            sound_buffer_factory("sound/shoot.wav"),
+            sound_buffer_factory("sound/splat.wav")
         };
     };
 

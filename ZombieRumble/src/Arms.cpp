@@ -10,19 +10,19 @@ namespace arms {
 			int* bLeft = &box_.sBulletsLeft;
 			if (*bLeft >= MAX_CAP) {
 				*bLeft -= box_.sMainClip = MAX_CAP;
-				Sounds::get_instace()[AUDIO_BUFFER::RELOAD];
+				Sounds::get_instance()[AUDIO_BUFFER::RELOAD].play();
 			}
 			else if (*bLeft > 0) {
 				box_.sMainClip = *bLeft;
 				*bLeft = 0;
-				Sounds::get_instace()[AUDIO_BUFFER::RELOAD];
+				Sounds::get_instance()[AUDIO_BUFFER::RELOAD].play();
 			}
 			else
-				Sounds::get_instace()[AUDIO_BUFFER::RELOAD_FAILED];
+				Sounds::get_instance()[AUDIO_BUFFER::RELOAD_FAILED].play();
 			box_.sReloadLock = gameTime;
 		}
 		else
-			Sounds::get_instace()[AUDIO_BUFFER::RELOAD_FAILED];
+			Sounds::get_instance()[AUDIO_BUFFER::RELOAD_FAILED].play();
 	}
 
 	void Gun::shot(Time const& gameTime, Vector2f const& playerPos,
@@ -37,7 +37,7 @@ namespace arms {
 				box_.sFormerShot = gameTime;
 				--box_.sMainClip;
 
-				Sounds::get_instace()[AUDIO_BUFFER::SHOOT];
+				Sounds::get_instance()[AUDIO_BUFFER::SHOOT].play();
 			}
 		}
 	}

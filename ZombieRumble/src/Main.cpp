@@ -188,7 +188,7 @@ void prepare_level(Game& game, GameTime& time,
 	int current_wave = HUD::get_instance().get_wave();
 
 	int new_width = 500 + 100 * current_wave;
-	int new_height = 400 + 90 * current_wave;
+	int new_height = 400 + 50 * current_wave;
 
 	game.set_arena(new_width, new_height);
 	bg.create(game.get_arena());
@@ -197,7 +197,7 @@ void prepare_level(Game& game, GameTime& time,
 	horde.increase_zombie_wave(current_wave * 5);
 	horde.prepare_horde(game.get_arena());
 
-	Sounds::get_instace()[AUDIO_BUFFER::POWERUP].play();
+	Sounds::get_instance()[AUDIO_BUFFER::POWERUP].play();
 
 	time.clock_restart();	
 }
