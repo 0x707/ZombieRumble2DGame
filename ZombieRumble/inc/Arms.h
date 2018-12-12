@@ -16,6 +16,7 @@ namespace arms {
 	{
 		int sBulletsLeft = MAX_BULLETS;
 		int sMainClip = MAX_CAP;
+		int sMainClipMAX = MAX_CAP;
 		float sFireRate = 2.f;
 		Time sReloadLock = Time::Zero;
 		Time sFormerShot = Time::Zero;
@@ -39,7 +40,7 @@ namespace arms {
 		BoxGun const& get_clip() const { return box_; }
 
 		void increase_fire_rate(float amount) { box_.sFireRate += amount; }
-		void increase_clip_size() { box_.sMainClip += MAX_CAP; }
+		void increase_clip_size() { box_.sMainClipMAX += MAX_CAP; }
 		void reset_gun_stats();
 	private:
 		BoxGun box_;

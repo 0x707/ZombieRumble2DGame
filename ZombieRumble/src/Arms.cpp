@@ -8,8 +8,8 @@ namespace arms {
 	{
 		if (gameTime.asMilliseconds() - box_.sReloadLock.asMilliseconds() > 1500.f) {
 			int* bLeft = &box_.sBulletsLeft;
-			if (*bLeft >= MAX_CAP) {
-				*bLeft -= box_.sMainClip = MAX_CAP;
+			if (*bLeft >= box_.sMainClipMAX) {
+				*bLeft -= box_.sMainClip = box_.sMainClipMAX;
 				Sounds::get_instance()[AUDIO_BUFFER::RELOAD].play();
 			}
 			else if (*bLeft > 0) {
